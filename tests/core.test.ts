@@ -13,6 +13,7 @@ import { DEFAULT_PROGRESS, type ScoreScales, type SessionRecord } from '@/models
 import { getAllScenarios, getCharacter, getJourney } from '@/services/scenario-loader';
 import { buildNarratorIntro, buildSceneBrief } from '@/services/scene-brief';
 import { evaluateDialogueEnd, maxUserTurns } from '@/services/dialogue-end';
+import { stripBase, withBase } from '@/services/base-path';
 import { coachFeedbackSchema } from '@/ai/schemas';
 
 const baseScores: ScoreScales = {
@@ -197,5 +198,14 @@ describe('dialogue end', () => {
       },
     });
     expect(d.ended).toBe(false);
+  });
+});
+
+describe('base path helpers', () => {
+  it('withBase keeps root paths when base is /', () => {
+    // In vitest Vite sets BASE_URL to '/' by default
+    expect(withBase('/')).toBe('/');
+    expect(withBase('/training')).toBe('/training');
+    expect(stripBase('/training')).toBe('/training');
   });
 });

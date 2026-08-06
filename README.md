@@ -26,6 +26,15 @@ npm test
 npm run build
 ```
 
+## Деплой
+
+- **Cloudflare Pages:** https://antibulling.pages.dev/ (`npm run deploy:cf`)
+- **GitHub Pages:** https://bndby.github.io/anti-bulling/ (Actions → `Deploy GitHub Pages` на `main`, `VITE_BASE=/anti-bulling/`)
+
+```bash
+npm run build:gh
+```
+
 ## Архитектура
 
 ```

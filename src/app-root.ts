@@ -1,6 +1,7 @@
 import { Router } from '@lit-labs/router';
 import { LitElement, css, html } from 'lit';
 import { customElement, state } from 'lit/decorators.js';
+import { currentAppPath, withBase } from '@/services/base-path';
 import { getProfile } from '@/storage/db';
 
 import '@/pages/page-onboarding';
@@ -17,26 +18,27 @@ import '@/pages/page-parent';
 import '@/pages/page-support';
 import '@/components/offline-banner';
 
+function route(path: string): string {
+  return withBase(path);
+}
+
 @customElement('app-root')
 export class AppRoot extends LitElement {
   @state() private ready = false;
 
   private router = new Router(this, [
-    { path: '/', render: () => html`<page-home></page-home>` },
-    { path: '/onboarding', render: () => html`<page-onboarding></page-onboarding>` },
-    { path: '/settings', render: () => html`<page-settings></page-settings>` },
-    { path: '/practice', render: () => html`<page-practice></page-practice>` },
-    { path: '/story', render: () => html`<page-story></page-story>` },
-    { path: '/chat', render: () => html`<page-chat></page-chat>` },
-    { path: '/exam', render: () => html`<page-exam></page-exam>` },
-    { path: '/challenge', render: () => html`<page-challenge></page-challenge>` },
-    {
-      path: '/training',
-      render: () => html`<page-training></page-training>`,
-    },
-    { path: '/progress', render: () => html`<page-progress></page-progress>` },
-    { path: '/parent', render: () => html`<page-parent></page-parent>` },
-    { path: '/support', render: () => html`<page-support></page-support>` },
+    { path: route('/'), render: () => html`<page-home></page-home>` },
+    { path: route('/onboarding'), render: () => html`<page-onboarding></page-onboarding>` },
+    { path: route('/settings'), render: () => html`<page-settings></page-settings>` },
+    { path: route('/practice'), render: () => html`<page-practice></page-practice>` },
+    { path: route('/story'), render: () => html`<page-story></page-story>` },
+    { path: route('/chat'), render: () => html`<page-chat></page-chat>` },
+    { path: route('/exam'), render: () => html`<page-exam></page-exam>` },
+    { path: route('/challenge'), render: () => html`<page-challenge></page-challenge>` },
+    { path: route('/training'), render: () => html`<page-training></page-training>` },
+    { path: route('/progress'), render: () => html`<page-progress></page-progress>` },
+    { path: route('/parent'), render: () => html`<page-parent></page-parent>` },
+    { path: route('/support'), render: () => html`<page-support></page-support>` },
   ]);
 
   static styles = css`
@@ -49,11 +51,18 @@ export class AppRoot extends LitElement {
   async connectedCallback(): Promise<void> {
     super.connectedCallback();
     window.addEventListener('app-navigate', this.onAppNavigate);
+
+    // GitHub Pages may open `/anti-bulling` without trailing slash
+    const base = withBase('/').replace(/\/$/, '');
+    if (base && location.pathname === base) {
+      history.replaceState({}, '', `${base}/`);
+    }
+
     const profile = await getProfile();
     this.ready = true;
-    if (!profile && location.pathname !== '/onboarding') {
-      history.replaceState({}, '', '/onboarding');
-      await this.router.goto('/onboarding');
+    if (!profile && currentAppPath() !== '/onboarding') {
+      history.replaceState({}, '', withBase('/onboarding'));
+      await this.router.goto(withBase('/onboarding'));
     }
   }
 
@@ -64,7 +73,7 @@ export class AppRoot extends LitElement {
 
   private onAppNavigate = (e: Event) => {
     const path = (e as CustomEvent<{ path: string }>).detail?.path;
-    if (path) void this.router.goto(path);
+    if (path) void this.router.goto(withBase(path));
   };
 
   protected render() {

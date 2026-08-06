@@ -2,7 +2,10 @@ import { defineConfig } from 'vitest/config';
 import { VitePWA } from 'vite-plugin-pwa';
 import { fileURLToPath, URL } from 'node:url';
 
+const base = process.env.VITE_BASE || '/';
+
 export default defineConfig({
+  base,
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url)),
@@ -20,7 +23,8 @@ export default defineConfig({
         background_color: '#0f2e26',
         display: 'standalone',
         lang: 'ru',
-        start_url: '/',
+        start_url: base,
+        scope: base,
         icons: [
           {
             src: 'icons/pwa-192.png',
@@ -42,7 +46,7 @@ export default defineConfig({
       },
       workbox: {
         globPatterns: ['**/*.{js,css,html,ico,png,svg,json,md,woff2}'],
-        navigateFallback: '/index.html',
+        navigateFallback: `${base}index.html`.replace(/\/{2,}/g, '/'),
       },
       devOptions: {
         enabled: false,

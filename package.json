@@ -6,9 +6,11 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
+    "build:gh": "VITE_BASE=/anti-bulling/ tsc && VITE_BASE=/anti-bulling/ vite build",
     "preview": "vite preview",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "deploy:cf": "npm run build && wrangler pages deploy dist --project-name=antibulling --branch=main"
   },
   "dependencies": {
     "@lit-labs/router": "^0.1.4",

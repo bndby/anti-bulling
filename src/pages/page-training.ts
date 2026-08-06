@@ -18,6 +18,7 @@ import {
   getTrainingLaunch,
   navigate,
   setTrainingLaunch,
+  assignRoute,
   type TrainingLaunch,
 } from '@/services/navigation';
 import {
@@ -407,7 +408,7 @@ export class PageTraining extends LitElement {
           examQueue: this.launch.examQueue,
           examIndex: nextIndex,
         });
-        location.assign('/training');
+        assignRoute('/training');
         return;
       }
     }

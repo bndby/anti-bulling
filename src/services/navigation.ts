@@ -1,4 +1,5 @@
 import type { Scenario, TrainingMode } from '@/models/types';
+import { currentAppPath, withBase } from '@/services/base-path';
 
 const KEY = 'ab_training_session';
 
@@ -28,13 +29,21 @@ export function clearTrainingLaunch(): void {
   sessionStorage.removeItem(KEY);
 }
 
-/** Programmatic SPA navigation for @lit-labs/router */
+/** Programmatic SPA navigation (paths without base, e.g. `/training`) */
 export function navigate(path: string): void {
-  if (location.pathname === path) {
-    window.dispatchEvent(new CustomEvent('app-navigate', { detail: { path } }));
+  const appPath = path.startsWith('/') ? path : `/${path}`;
+  const full = withBase(appPath);
+
+  if (currentAppPath() === appPath) {
+    window.dispatchEvent(new CustomEvent('app-navigate', { detail: { path: appPath } }));
     return;
   }
-  history.pushState({}, '', path);
+  history.pushState({}, '', full);
   window.dispatchEvent(new PopStateEvent('popstate'));
-  window.dispatchEvent(new CustomEvent('app-navigate', { detail: { path } }));
+  window.dispatchEvent(new CustomEvent('app-navigate', { detail: { path: appPath } }));
+}
+
+/** Full reload to an app route (keeps base prefix) */
+export function assignRoute(path: string): void {
+  location.assign(withBase(path));
 }
