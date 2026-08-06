@@ -1,0 +1,21 @@
+{
+  "id": "s07",
+  "title": "Чат класса",
+  "place": "чат класса",
+  "timeOfDay": "вечер",
+  "conflictType": "online",
+  "intensity": 2,
+  "characterId": "online-tim",
+  "witnesses": true,
+  "previousEvents": "Кто-то кинул неудачное фото с урока",
+  "relationship": "одноклассники онлайн",
+  "bullyGoal": "собрать реакции",
+  "emotionalState": "язвительный",
+  "openingLine": "Лол, это фото надо в топ мемчиков месяца.",
+  "context": "Сообщение в общем чате.",
+  "journeyNodeId": "bus",
+  "tags": [
+    "online"
+  ],
+  "setup": "Вечером в общем чате класса кто-то выложил неудачное фото с урока. Тим сразу цепляется к нему мемом и пытается раскрутить насмешку на реакциях."
+}

@@ -1,0 +1,22 @@
+{
+  "id": "s17",
+  "title": "Бойкот проекта",
+  "place": "класс",
+  "timeOfDay": "проект",
+  "conflictType": "social",
+  "intensity": 3,
+  "characterId": "manipulator-lera",
+  "witnesses": true,
+  "previousEvents": "Групповая работа",
+  "relationship": "одноклассники",
+  "bullyGoal": "выжить из команды",
+  "emotionalState": "заботливый",
+  "openingLine": "Мы просто думаем, что тебе будет комфортнее одной. Не обижайся.",
+  "context": "Исключение под видом заботы.",
+  "journeyNodeId": "canteen",
+  "tags": [
+    "social",
+    "manip"
+  ],
+  "setup": "В классе распределяют проект по группам. Лера от лица команды говорит, что тебе «будет комфортнее одной» — исключение под видом заботы."
+}

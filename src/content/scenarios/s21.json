@@ -1,0 +1,22 @@
+{
+  "id": "s21",
+  "title": "Игнор сообщений",
+  "place": "чат",
+  "timeOfDay": "вечер",
+  "conflictType": "social",
+  "intensity": 2,
+  "characterId": "manipulator-lera",
+  "witnesses": false,
+  "previousEvents": "Ты написал в общий чат",
+  "relationship": "одноклассники",
+  "bullyGoal": "изолировать",
+  "emotionalState": "равнодушный",
+  "openingLine": "Все прочитали и молчат. А, ты ещё пишешь сюда?",
+  "context": "Социальный игнор онлайн.",
+  "journeyNodeId": "bus",
+  "tags": [
+    "social",
+    "online"
+  ],
+  "setup": "Ты написал в общий чат — сообщение прочитали, но никто не ответил. Позже Лера всё же отвечает холодно, подчёркивая, что тебя там как будто и не ждут."
+}

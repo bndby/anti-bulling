@@ -1,0 +1,21 @@
+{
+  "id": "s09",
+  "title": "Коммент в TikTok",
+  "place": "TikTok",
+  "timeOfDay": "вечер",
+  "conflictType": "online",
+  "intensity": 2,
+  "characterId": "mocker-artem",
+  "witnesses": true,
+  "previousEvents": "Ты выложил танцевальный ролик",
+  "relationship": "знакомые",
+  "bullyGoal": "получить лайки на насмешке",
+  "emotionalState": "насмешливый",
+  "openingLine": "Бро, лучше бы не снимал. komplekt cringe.",
+  "context": "Публичный комментарий.",
+  "journeyNodeId": "camp",
+  "tags": [
+    "online"
+  ],
+  "setup": "Ты выложил танцевальный ролик в TikTok. Артём пишет публичный комментарий, чтобы набрать реакции на твоём «кринже» и снизить тебе желание выкладывать что-то снова."
+}

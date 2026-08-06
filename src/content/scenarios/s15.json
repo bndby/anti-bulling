@@ -1,0 +1,21 @@
+{
+  "id": "s15",
+  "title": "Двое против одного",
+  "place": "коридор",
+  "timeOfDay": "перемена",
+  "conflictType": "group",
+  "intensity": 3,
+  "characterId": "leader-danya",
+  "witnesses": true,
+  "previousEvents": "Спор из-за места у окна",
+  "relationship": "двое одноклассников",
+  "bullyGoal": "задавить числом",
+  "emotionalState": "уверенный",
+  "openingLine": "Скажи ему, Артём... Ну что, язык проглотил?",
+  "context": "Даня и Артём вместе.",
+  "journeyNodeId": "corridor",
+  "tags": [
+    "group"
+  ],
+  "setup": "На перемене в коридоре спор из-за места у окна. Даня и Артём встают вдвоём против тебя и подначивают ответить — давление числом и зрителями."
+}

@@ -1,0 +1,21 @@
+{
+  "id": "s20",
+  "title": "Насмешка над хобби",
+  "place": "столовая",
+  "timeOfDay": "обед",
+  "conflictType": "verbal",
+  "intensity": 2,
+  "characterId": "mocker-artem",
+  "witnesses": true,
+  "previousEvents": "Ты рассказал про хобби",
+  "relationship": "одноклассники",
+  "bullyGoal": "получить смех",
+  "emotionalState": "игривый",
+  "openingLine": "Серьёзно, ты этим занимаешься? Звучит максимально странно.",
+  "context": "Лёгкий verbal.",
+  "journeyNodeId": "canteen",
+  "tags": [
+    "verbal"
+  ],
+  "setup": "В столовой за обедом ты рассказал про своё хобби. Артём цепляется к этому при столе, чтобы получить смех и обесценить то, что тебе важно."
+}

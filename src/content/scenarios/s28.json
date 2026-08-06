@@ -1,0 +1,21 @@
+{
+  "id": "s28",
+  "title": "Лидер и наблюдатели",
+  "place": "раздевалка",
+  "timeOfDay": "после PE",
+  "conflictType": "group",
+  "intensity": 5,
+  "characterId": "leader-danya",
+  "witnesses": true,
+  "previousEvents": "Конфликт из-за скамейки",
+  "relationship": "компания",
+  "bullyGoal": "не потерять лицо",
+  "emotionalState": "напряжённый",
+  "openingLine": "Скажи прямо при всех, или все поймут, кто тут слабый.",
+  "context": "Максимум зрителей.",
+  "journeyNodeId": "locker",
+  "tags": [
+    "group"
+  ],
+  "setup": "После физкультуры в раздевалке спор из-за скамейки. Даня требует ответить при всей компании — ему важно не потерять лицо перед зрителями."
+}

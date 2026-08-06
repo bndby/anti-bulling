@@ -1,0 +1,22 @@
+{
+  "id": "s18",
+  "title": "«Это была шутка»",
+  "place": "раздевалка",
+  "timeOfDay": "после урока",
+  "conflictType": "verbal",
+  "intensity": 3,
+  "characterId": "gaslighter-masha",
+  "witnesses": true,
+  "previousEvents": "Публичная колкость",
+  "relationship": "одноклассники",
+  "bullyGoal": "снять ответственность",
+  "emotionalState": "слащавый",
+  "openingLine": "Ты чего? Я же пошутила. Ты слишком чувствительный.",
+  "context": "Классический газлайт.",
+  "journeyNodeId": "locker",
+  "tags": [
+    "verbal",
+    "gaslight"
+  ],
+  "setup": "В раздевалке после урока прозвучала публичная колкость в твой адрес. Когда ты реагируешь, Маша сразу говорит «это была шутка» и обвиняет тебя в излишней чувствительности."
+}

@@ -1,0 +1,21 @@
+{
+  "id": "s25",
+  "title": "Манипуляция дружбой",
+  "place": "перемена",
+  "timeOfDay": "двор",
+  "conflictType": "social",
+  "intensity": 4,
+  "characterId": "manipulator-lera",
+  "witnesses": false,
+  "previousEvents": "Вы считались друзьями",
+  "relationship": "друг",
+  "bullyGoal": "контроль",
+  "emotionalState": "мягкий",
+  "openingLine": "Если бы ты был настоящим другом, ты бы сделал это для меня.",
+  "context": "Чувство вины.",
+  "journeyNodeId": "break",
+  "tags": [
+    "manip"
+  ],
+  "setup": "На перемене во дворе Лера, с которой вы считались друзьями, давит чувством вины: «настоящий друг сделал бы это» — проверка и контроль под видом дружбы."
+}

@@ -1,0 +1,21 @@
+{
+  "id": "s10",
+  "title": "Telegram-пересылка",
+  "place": "Telegram",
+  "timeOfDay": "ночь",
+  "conflictType": "online",
+  "intensity": 3,
+  "characterId": "gaslighter-masha",
+  "witnesses": false,
+  "previousEvents": "Переслали твой личный текст",
+  "relationship": "знакомые",
+  "bullyGoal": "ударить доверием",
+  "emotionalState": "спокойный",
+  "openingLine": "Это же ты сам написал, чего теперь стесняться? Просто шутка.",
+  "context": "Пересланное сообщение.",
+  "journeyNodeId": "high-school",
+  "tags": [
+    "online"
+  ],
+  "setup": "Кто-то переслал в Telegram твой личный текст. Маша делает вид, что это ерунда и «просто шутка», будто ты сам виноват, что стесняешься."
+}

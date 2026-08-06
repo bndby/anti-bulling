@@ -1,0 +1,22 @@
+{
+  "id": "s23",
+  "title": "Сарказм на тренировке",
+  "place": "лагерь",
+  "timeOfDay": "день",
+  "conflictType": "verbal",
+  "intensity": 3,
+  "characterId": "senior-igor",
+  "witnesses": true,
+  "previousEvents": "Летний лагерь, спорт",
+  "relationship": "старший отряд",
+  "bullyGoal": "статус",
+  "emotionalState": "насмешливый",
+  "openingLine": "Младшие сегодня особенно медленные. Особенно некоторые.",
+  "context": "Давление авторитета.",
+  "journeyNodeId": "camp",
+  "tags": [
+    "verbal",
+    "authority"
+  ],
+  "setup": "В лагере на спортивном занятии старший отряд рядом. Игорь громко язвит про «медленных младших» — и ясно, что колкость адресована тебе."
+}

@@ -1,0 +1,21 @@
+{
+  "id": "s16",
+  "title": "Толпа на перемене",
+  "place": "двор",
+  "timeOfDay": "перемена",
+  "conflictType": "group",
+  "intensity": 4,
+  "characterId": "leader-danya",
+  "witnesses": true,
+  "previousEvents": "Кто-то начал спор про игру",
+  "relationship": "толпа",
+  "bullyGoal": "развлечь аудиторию",
+  "emotionalState": "возбуждённый",
+  "openingLine": "О, все смотрят. Давай, ответь хоть что-нибудь умное.",
+  "context": "Круг зевак.",
+  "journeyNodeId": "break",
+  "tags": [
+    "group"
+  ],
+  "setup": "Во дворе на перемене вспыхнул спор про игру. Вокруг собралась толпа. Даня пользуется аудиторией: заставляет тебя «ответить умно» при всех."
+}

@@ -1,0 +1,22 @@
+{
+  "id": "s24",
+  "title": "Два против в чате",
+  "place": "Discord",
+  "timeOfDay": "вечер",
+  "conflictType": "group",
+  "intensity": 3,
+  "characterId": "online-tim",
+  "witnesses": true,
+  "previousEvents": "Спор в текстовом канале",
+  "relationship": "двое в чате",
+  "bullyGoal": "унизить",
+  "emotionalState": "язвительный",
+  "openingLine": "Смотри, ему даже ответить нечего. Пиши быстрее, клоун.",
+  "context": "Групповой онлайн.",
+  "journeyNodeId": "high-school",
+  "tags": [
+    "group",
+    "online"
+  ],
+  "setup": "В текстовом канале Discord спор. Тим вместе с ещё одним участником нападают на тебя сообщениями: торопят, обзывают и пытаются выставить слабым перед чатом."
+}

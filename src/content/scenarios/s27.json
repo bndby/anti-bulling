@@ -1,0 +1,22 @@
+{
+  "id": "s27",
+  "title": "Комбо: слух+чат",
+  "place": "онлайн+школа",
+  "timeOfDay": "день",
+  "conflictType": "online",
+  "intensity": 4,
+  "characterId": "gaslighter-masha",
+  "witnesses": true,
+  "previousEvents": "Слух перешёл из школы в чат",
+  "relationship": "смешанная аудитория",
+  "bullyGoal": "запутать",
+  "emotionalState": "спокойный",
+  "openingLine": "В чате все видели. Ты сам это начал, не перекладывай.",
+  "context": "Комбинированная.",
+  "journeyNodeId": "high-school",
+  "tags": [
+    "online",
+    "social"
+  ],
+  "setup": "Слух, который начался в школе, перекочевал в онлайн-чат. Маша говорит, будто «все уже видели», и перекладывает вину на тебя, запутывая что было раньше."
+}

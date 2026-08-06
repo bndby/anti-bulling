@@ -1,0 +1,21 @@
+{
+  "id": "s13",
+  "title": "Замечание тренера",
+  "place": "спортзал",
+  "timeOfDay": "тренировка",
+  "conflictType": "authority",
+  "intensity": 3,
+  "characterId": "coach-pressure",
+  "witnesses": true,
+  "previousEvents": "Ты ошибся в упражнении",
+  "relationship": "ученик-тренер",
+  "bullyGoal": "дисциплина через стыд",
+  "emotionalState": "жёсткий",
+  "openingLine": "Все видели? Вот так делать не надо. Особенно ты.",
+  "context": "Публичное замечание.",
+  "journeyNodeId": "camp",
+  "tags": [
+    "authority"
+  ],
+  "setup": "На тренировке ты ошибся в упражнении. Тренер Сергей Петрович делает публичное замечание именно на тебе — чтобы через стыд «подтянуть дисциплину» всей группы."
+}

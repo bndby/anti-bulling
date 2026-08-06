@@ -1,0 +1,22 @@
+{
+  "id": "s26",
+  "title": "Длительная колкость",
+  "place": "класс",
+  "timeOfDay": "неделя",
+  "conflictType": "verbal",
+  "intensity": 4,
+  "characterId": "mocker-artem",
+  "witnesses": true,
+  "previousEvents": "Несколько дней подколок",
+  "relationship": "одноклассники",
+  "bullyGoal": "закрепить кличку",
+  "emotionalState": "настойчивый",
+  "openingLine": "О, снова он. Мы уже кличку запомнили, не стесняйся.",
+  "context": "Повторное давление.",
+  "journeyNodeId": "corridor",
+  "tags": [
+    "verbal",
+    "persistent"
+  ],
+  "setup": "Уже несколько дней Артём и другие цепляются одной и той же кличкой. Сегодня в классе он снова это повторяет, будто кличка уже «закрепилась»."
+}

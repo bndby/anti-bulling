@@ -1,0 +1,21 @@
+{
+  "id": "s04",
+  "title": "Игнор в компании",
+  "place": "перемена",
+  "timeOfDay": "двор",
+  "conflictType": "social",
+  "intensity": 2,
+  "characterId": "leader-danya",
+  "witnesses": true,
+  "previousEvents": "Вчера вы спорили из-за игры",
+  "relationship": "знакомые",
+  "bullyGoal": "исключить из круга",
+  "emotionalState": "холодный",
+  "openingLine": "Мы тут без тебя обсуждаем. Иди пока.",
+  "context": "Группа отворачивается.",
+  "journeyNodeId": "break",
+  "tags": [
+    "social"
+  ],
+  "setup": "Вчера вы спорили из-за игры, и атмосфера осталась напряжённой. На перемене во дворе Даня с компанией специально отворачиваются и дают понять, что тебя тут не ждут."
+}

@@ -1,0 +1,22 @@
+{
+  "id": "s01",
+  "title": "Кличка в коридоре",
+  "place": "коридор",
+  "timeOfDay": "утро",
+  "conflictType": "verbal",
+  "intensity": 1,
+  "characterId": "mocker-artem",
+  "witnesses": true,
+  "previousEvents": "Первый день, вы ещё мало знакомы",
+  "relationship": "одноклассники",
+  "bullyGoal": "получить смех",
+  "emotionalState": "возбуждён",
+  "openingLine": "Эй, новенький, у тебя рюкзак как у первоклашки.",
+  "context": "Артём громко говорит при проходящих.",
+  "journeyNodeId": "first-day",
+  "tags": [
+    "verbal",
+    "corridor"
+  ],
+  "setup": "Сегодня твой первый день в новой школе. Ты идёшь по коридору с рюкзаком, вокруг ещё мало знакомых лиц. Артём замечает тебя и решает пошутить при всех, чтобы привлечь внимание."
+}

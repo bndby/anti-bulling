@@ -1,0 +1,113 @@
+{
+  "nodes": [
+    {
+      "id": "first-day",
+      "title": "Первый день",
+      "order": 1,
+      "scenarioIds": [
+        "s01"
+      ]
+    },
+    {
+      "id": "acquaintance",
+      "title": "Знакомство",
+      "order": 2,
+      "scenarioIds": [
+        "s02",
+        "s14"
+      ],
+      "unlockAfter": "first-day"
+    },
+    {
+      "id": "corridor",
+      "title": "Коридор",
+      "order": 3,
+      "scenarioIds": [
+        "s03",
+        "s15",
+        "s26"
+      ],
+      "unlockAfter": "acquaintance"
+    },
+    {
+      "id": "break",
+      "title": "Перемена",
+      "order": 4,
+      "scenarioIds": [
+        "s04",
+        "s16",
+        "s25"
+      ],
+      "unlockAfter": "corridor"
+    },
+    {
+      "id": "canteen",
+      "title": "Столовая",
+      "order": 5,
+      "scenarioIds": [
+        "s05",
+        "s17",
+        "s20"
+      ],
+      "unlockAfter": "break"
+    },
+    {
+      "id": "locker",
+      "title": "Раздевалка",
+      "order": 6,
+      "scenarioIds": [
+        "s06",
+        "s12",
+        "s18",
+        "s28"
+      ],
+      "unlockAfter": "canteen"
+    },
+    {
+      "id": "bus",
+      "title": "Автобус",
+      "order": 7,
+      "scenarioIds": [
+        "s07",
+        "s19",
+        "s21"
+      ],
+      "unlockAfter": "locker"
+    },
+    {
+      "id": "trip",
+      "title": "Экскурсия",
+      "order": 8,
+      "scenarioIds": [
+        "s08",
+        "s22"
+      ],
+      "unlockAfter": "bus"
+    },
+    {
+      "id": "camp",
+      "title": "Лагерь",
+      "order": 9,
+      "scenarioIds": [
+        "s09",
+        "s13",
+        "s23",
+        "s29"
+      ],
+      "unlockAfter": "trip"
+    },
+    {
+      "id": "high-school",
+      "title": "Старшая школа",
+      "order": 10,
+      "scenarioIds": [
+        "s10",
+        "s11",
+        "s24",
+        "s27",
+        "s30"
+      ],
+      "unlockAfter": "camp"
+    }
+  ]
+}

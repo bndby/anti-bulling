@@ -1,0 +1,21 @@
+{
+  "id": "s29",
+  "title": "Авторитет + сарказм",
+  "place": "спортзал",
+  "timeOfDay": "тренировка",
+  "conflictType": "authority",
+  "intensity": 4,
+  "characterId": "coach-pressure",
+  "witnesses": true,
+  "previousEvents": "Публичная ошибка",
+  "relationship": "тренер-ученик",
+  "bullyGoal": "стыд как мотивация",
+  "emotionalState": "жёсткий",
+  "openingLine": "Может, тебе болельщиком стать, раз так стараешься?",
+  "context": "Сарказм авторитета.",
+  "journeyNodeId": "camp",
+  "tags": [
+    "authority"
+  ],
+  "setup": "На тренировке ты публично ошибся. Тренер не просто поправляет, а язвит: предлагает «лучше болельщиком стать» — стыд как способ давления."
+}

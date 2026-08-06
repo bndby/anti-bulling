@@ -1,0 +1,22 @@
+{
+  "id": "s03",
+  "title": "Сарказм про оценку",
+  "place": "класс",
+  "timeOfDay": "после контрольной",
+  "conflictType": "verbal",
+  "intensity": 2,
+  "characterId": "mocker-artem",
+  "witnesses": true,
+  "previousEvents": "Ты получил хорошую оценку",
+  "relationship": "одноклассники",
+  "bullyGoal": "занизить успех",
+  "emotionalState": "зависть",
+  "openingLine": "Ну конечно, ботаник снова вырвался вперёд.",
+  "context": "Сарказм при сдаче работ.",
+  "journeyNodeId": "corridor",
+  "tags": [
+    "verbal",
+    "sarcasm"
+  ],
+  "setup": "Только что раздали работы. У тебя оценка лучше, чем у многих. Артём это заметил и при всех язвит, будто хорошая оценка — повод для насмешки."
+}

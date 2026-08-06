@@ -1,0 +1,22 @@
+{
+  "id": "s30",
+  "title": "Комбо манипуляция+группа",
+  "place": "старшая школа",
+  "timeOfDay": "день",
+  "conflictType": "group",
+  "intensity": 5,
+  "characterId": "manipulator-lera",
+  "witnesses": true,
+  "previousEvents": "Новая школа, новый круг",
+  "relationship": "компания",
+  "bullyGoal": "проверить границы",
+  "emotionalState": "заботливый",
+  "openingLine": "Мы волнуемся за тебя. Поэтому лучше не спорь с нами при всех, ок?",
+  "context": "Сложная комбинированная сцена.",
+  "journeyNodeId": "high-school",
+  "tags": [
+    "group",
+    "manip"
+  ],
+  "setup": "Ты недавно в старшей школе, круг ещё новый. Лера от лица компании говорит «мы волнуемся» и просит не спорить при всех — мягкая манипуляция плюс давление группы."
+}

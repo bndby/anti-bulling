@@ -1,0 +1,21 @@
+{
+  "id": "s08",
+  "title": "Сторис с намёком",
+  "place": "Instagram",
+  "timeOfDay": "вечер",
+  "conflictType": "online",
+  "intensity": 3,
+  "characterId": "online-tim",
+  "witnesses": true,
+  "previousEvents": "Вы недавно поссорились",
+  "relationship": "подписчики",
+  "bullyGoal": "унизить публично",
+  "emotionalState": "злорадный",
+  "openingLine": "Новая сторис: «когда кто-то думает, что он особенный» и твой эмодзи.",
+  "context": "Намёк без имени, но понятно.",
+  "journeyNodeId": "trip",
+  "tags": [
+    "online"
+  ],
+  "setup": "Недавно вы поссорились. Вечером в Instagram появляется сторис с прозрачным намёком на тебя — без имени, но всем понятно, о ком речь. Тим добивается публичного унижения."
+}

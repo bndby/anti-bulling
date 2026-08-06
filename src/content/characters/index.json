@@ -1,0 +1,135 @@
+[
+  {
+    "id": "mocker-artem",
+    "name": "Артём",
+    "age": 13,
+    "archetype": "Насмешник",
+    "personality": "Любит внимание класса, шутит остро, быстро отступает перед уверенностью",
+    "motivation": "Получать смех аудитории",
+    "speechStyle": "Короткие колкости, клички, сарказм",
+    "favoriteTactics": ["клички", "публичные шутки", "передразнивание"],
+    "traits": {
+      "empathy": 25,
+      "aggression": 40,
+      "leadership": 35,
+      "persistence": 30,
+      "humor": 80,
+      "selfEsteem": 55,
+      "intelligence": 55
+    }
+  },
+  {
+    "id": "manipulator-lera",
+    "name": "Лера",
+    "age": 14,
+    "archetype": "Манипулятор",
+    "personality": "Мягкий тон, чувство вины, притворяется другом",
+    "motivation": "Проверять границы и контролировать",
+    "speechStyle": "Тихо, «заботливо», с намёками",
+    "favoriteTactics": ["чувство вины", "псевдозабота", "изоляция"],
+    "traits": {
+      "empathy": 40,
+      "aggression": 25,
+      "leadership": 60,
+      "persistence": 75,
+      "humor": 30,
+      "selfEsteem": 70,
+      "intelligence": 75
+    }
+  },
+  {
+    "id": "leader-danya",
+    "name": "Даня",
+    "age": 15,
+    "archetype": "Лидер",
+    "personality": "Важен статус, не любит выглядеть слабым, держит компанию",
+    "motivation": "Сохранить авторитет перед зрителями",
+    "speechStyle": "Уверенно, громко, с оценками «круто/жалко»",
+    "favoriteTactics": ["давление аудитории", "вызов", "игнор после ответа"],
+    "traits": {
+      "empathy": 20,
+      "aggression": 55,
+      "leadership": 90,
+      "persistence": 70,
+      "humor": 45,
+      "selfEsteem": 85,
+      "intelligence": 60
+    }
+  },
+  {
+    "id": "gaslighter-masha",
+    "name": "Маша",
+    "age": 13,
+    "archetype": "Газлайтер",
+    "personality": "Перекручивает факты, называет всё шуткой",
+    "motivation": "Снять с себя ответственность и запутать",
+    "speechStyle": "Сладко, с отрицанием, «ты всё придумал»",
+    "favoriteTactics": ["отрицание", "«это шутка»", "перекладывание вины"],
+    "traits": {
+      "empathy": 15,
+      "aggression": 35,
+      "leadership": 40,
+      "persistence": 80,
+      "humor": 50,
+      "selfEsteem": 65,
+      "intelligence": 70
+    }
+  },
+  {
+    "id": "senior-igor",
+    "name": "Игорь",
+    "age": 16,
+    "archetype": "Старшеклассник",
+    "personality": "Свысока, пользуется возрастом",
+    "motivation": "Показать иерархию",
+    "speechStyle": "Покровительственно, короткие приказы",
+    "favoriteTactics": ["возрастной статус", "насмешка над младшими"],
+    "traits": {
+      "empathy": 20,
+      "aggression": 50,
+      "leadership": 55,
+      "persistence": 45,
+      "humor": 35,
+      "selfEsteem": 75,
+      "intelligence": 55
+    }
+  },
+  {
+    "id": "online-tim",
+    "name": "Тим",
+    "age": 14,
+    "archetype": "Онлайн-тролль",
+    "personality": "Смелее за экраном, любит мемы и скрины",
+    "motivation": "Виральность и реакции в чате",
+    "speechStyle": "Мемы, сарказм, короткие сообщения",
+    "favoriteTactics": ["публичный чат", "скрины", "теги"],
+    "traits": {
+      "empathy": 15,
+      "aggression": 45,
+      "leadership": 30,
+      "persistence": 60,
+      "humor": 70,
+      "selfEsteem": 50,
+      "intelligence": 60
+    }
+  },
+  {
+    "id": "coach-pressure",
+    "name": "Сергей Петрович",
+    "age": 38,
+    "archetype": "Авторитет-тренер",
+    "personality": "Жёсткий тон «для твоего же блага», публичные замечания",
+    "motivation": "Дисциплина и контроль группы",
+    "speechStyle": "Взрослый, назидательный, без мата",
+    "favoriteTactics": ["публичное замечание", "сравнение с другими"],
+    "traits": {
+      "empathy": 30,
+      "aggression": 40,
+      "leadership": 85,
+      "persistence": 70,
+      "humor": 10,
+      "selfEsteem": 80,
+      "intelligence": 65
+    }
+  }
+]

@@ -1,0 +1,21 @@
+{
+  "id": "s19",
+  "title": "Давление лидера компании",
+  "place": "автобус",
+  "timeOfDay": "поездка",
+  "conflictType": "group",
+  "intensity": 4,
+  "characterId": "leader-danya",
+  "witnesses": true,
+  "previousEvents": "Школьная поездка",
+  "relationship": "компания",
+  "bullyGoal": "проверить лояльность",
+  "emotionalState": "холодный",
+  "openingLine": "Либо ты с нами и делаешь как мы сказали, либо сидишь один.",
+  "context": "Выбор под давлением.",
+  "journeyNodeId": "bus",
+  "tags": [
+    "group"
+  ],
+  "setup": "В школьном автобусе компания вокруг Дани проверяет, «свой» ты или нет. Тебе ставят ультиматум: либо делаешь как они сказали, либо сидишь один."
+}

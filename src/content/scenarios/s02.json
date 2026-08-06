@@ -1,0 +1,21 @@
+{
+  "id": "s02",
+  "title": "Шутка про имя",
+  "place": "класс",
+  "timeOfDay": "урок",
+  "conflictType": "verbal",
+  "intensity": 1,
+  "characterId": "mocker-artem",
+  "witnesses": true,
+  "previousEvents": "Учитель отвернулся к доске",
+  "relationship": "соседи по парте",
+  "bullyGoal": "выделиться",
+  "emotionalState": "игривый",
+  "openingLine": "Ого, твоё имя вообще нормальные люди произносят?",
+  "context": "Лёгкая насмешка без толпы.",
+  "journeyNodeId": "acquaintance",
+  "tags": [
+    "verbal"
+  ],
+  "setup": "Идёт урок. Учитель пишет на доске, класс шумит шёпотом. Сосед по парте Артём вдруг цепляется к твоему имени — хочет вызвать смех у ближайших одноклассников."
+}

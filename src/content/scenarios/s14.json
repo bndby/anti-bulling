@@ -1,0 +1,21 @@
+{
+  "id": "s14",
+  "title": "Сравнение родителем",
+  "place": "дома",
+  "timeOfDay": "вечер",
+  "conflictType": "authority",
+  "intensity": 2,
+  "characterId": "gaslighter-masha",
+  "witnesses": false,
+  "previousEvents": "Плохая оценка в дневнике",
+  "relationship": "семейный конфликт в симуляции",
+  "bullyGoal": "переложить вину",
+  "emotionalState": "мягкий",
+  "openingLine": "Ты всегда преувеличиваешь. Никто тебя не давил — ты сам придумал.",
+  "context": "Роль газлайтера в домашней сцене (симуляция).",
+  "journeyNodeId": "acquaintance",
+  "tags": [
+    "authority"
+  ],
+  "setup": "Дома вечером обсуждают оценку в дневнике. Маша (в роли газлайтера в этой сцене) перекручивает факты: будто ты всё преувеличил и никто тебя не давил."
+}

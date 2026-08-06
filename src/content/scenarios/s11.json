@@ -1,0 +1,22 @@
+{
+  "id": "s11",
+  "title": "Discord голосовой",
+  "place": "Discord",
+  "timeOfDay": "вечер",
+  "conflictType": "online",
+  "intensity": 2,
+  "characterId": "leader-danya",
+  "witnesses": true,
+  "previousEvents": "Играете в одной команде",
+  "relationship": "тиммейты",
+  "bullyGoal": "закрепить статус",
+  "emotionalState": "доминантный",
+  "openingLine": "Мьют его, он только мешает. Сам виноват.",
+  "context": "Давление в войсе.",
+  "journeyNodeId": "high-school",
+  "tags": [
+    "online",
+    "group"
+  ],
+  "setup": "Вы в голосовом канале Discord в одной команде. Даня решает закрепить статус лидера и предлагает остальных тебя замьютить — будто ты только мешаешь."
+}

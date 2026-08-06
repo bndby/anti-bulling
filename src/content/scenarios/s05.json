@@ -1,0 +1,21 @@
+{
+  "id": "s05",
+  "title": "Не позвали",
+  "place": "столовая",
+  "timeOfDay": "обед",
+  "conflictType": "social",
+  "intensity": 2,
+  "characterId": "manipulator-lera",
+  "witnesses": false,
+  "previousEvents": "Обычно сидели вместе",
+  "relationship": "бывшие друзья",
+  "bullyGoal": "изолировать",
+  "emotionalState": "слащавый",
+  "openingLine": "Мест нет... ну, ты же понимаешь.",
+  "context": "За столом вроде есть место.",
+  "journeyNodeId": "canteen",
+  "tags": [
+    "social"
+  ],
+  "setup": "Обычно вы обедали вместе, но сегодня за столом Лера говорит, что мест нет — хотя место явно есть. Тебя мягко, но явно выталкивают из компании."
+}
