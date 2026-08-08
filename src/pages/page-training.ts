@@ -10,6 +10,7 @@ import '@/components/typing-indicator';
 import type {
   ChatMessage,
   CoachFeedback,
+  Profile,
   ProgressState,
   Scenario,
   ScoreScales,
@@ -36,12 +37,14 @@ import {
 } from '@/services/speech';
 import {
   getProgress,
+  getProfile,
   getScenarioState,
   getSettings,
   saveProgress,
   saveScenarioState,
   saveSession,
 } from '@/storage/db';
+import { COACH_AVATAR_URL, getUserAvatarUrl } from '@/services/user-avatars';
 
 @customElement('page-training')
 export class PageTraining extends LitElement {
@@ -62,6 +65,8 @@ export class PageTraining extends LitElement {
   @state() private sceneWitnesses = false;
   @state() private sceneImage = '';
   @state() private characterAvatar = '';
+  @state() private characterName = '';
+  @state() private userProfile?: Profile;
   @state() private briefOpen = true;
   @state() private sceneEnded = false;
   @state() private endTitle = '';
@@ -117,8 +122,8 @@ export class PageTraining extends LitElement {
     .character-avatar {
       position: absolute;
       z-index: 2;
-      right: 1rem;
-      bottom: -34px;
+      top: 0.75rem;
+      right: 0.75rem;
       width: 86px;
       height: 86px;
       overflow: hidden;
@@ -133,11 +138,24 @@ export class PageTraining extends LitElement {
       height: 100%;
       object-fit: cover;
     }
+    .character-name {
+      position: absolute;
+      z-index: 2;
+      top: 6.5rem;
+      right: 0.6rem;
+      max-width: 10rem;
+      margin: 0;
+      color: white;
+      font-size: 0.72rem;
+      font-weight: 800;
+      line-height: 1.2;
+      text-align: center;
+      text-shadow: 0 1px 3px rgb(0 24 64 / 80%);
+    }
     .scene-body {
       padding: 1rem;
     }
     .scene h2 {
-      max-width: calc(100% - 94px);
       margin: 0 0 0.35rem;
       font-family: var(--font-display);
       font-size: 1.15rem;
@@ -263,6 +281,7 @@ export class PageTraining extends LitElement {
     this.launch = getTrainingLaunch();
     const settings = await getSettings();
     this.voiceEnabled = settings.voiceEnabled && isSpeechSupported();
+    this.userProfile = await getProfile();
 
     if (!this.launch) {
       navigate('/practice');
@@ -286,6 +305,7 @@ export class PageTraining extends LitElement {
     const visual = getScenarioVisual(scenario);
     this.sceneImage = visual.sceneImage;
     this.characterAvatar = visual.avatarImage;
+    this.characterName = character.name;
     this.briefOpen = true;
 
     const progress = await getProgress();
@@ -523,6 +543,7 @@ export class PageTraining extends LitElement {
           <div class="character-avatar">
             <img src=${this.characterAvatar} alt=${this.sceneWho || 'Собеседник'} />
           </div>
+          <p class="character-name">${this.sceneWho}</p>
         </div>
         <div class="scene-body">
           <h2>${this.scenarioTitle || 'Тренировка'}</h2>
@@ -533,7 +554,6 @@ export class PageTraining extends LitElement {
             ${this.sceneWhere
               ? html`<mdw-chip class="pill">${this.sceneWhere}</mdw-chip>`
               : null}
-            ${this.sceneWho ? html`<mdw-chip class="pill">${this.sceneWho}</mdw-chip>` : null}
             ${this.sceneConflict
               ? html`<mdw-chip class="pill">${this.sceneConflict}</mdw-chip>`
               : null}
@@ -570,7 +590,18 @@ export class PageTraining extends LitElement {
       <div class="feed">
         ${this.messages
           .filter((message, index) => index !== 0 || message.role !== 'narrator')
-          .map((message) => html`<chat-bubble .message=${message}></chat-bubble>`)}
+          .map(
+            (message) => html`
+              <chat-bubble
+                .message=${message}
+                .speakerName=${this.characterName}
+                .speakerAvatar=${this.characterAvatar}
+                .userName=${this.userProfile?.name ?? ''}
+                .userAvatar=${getUserAvatarUrl(this.userProfile?.avatarId)}
+                .coachAvatar=${COACH_AVATAR_URL}
+              ></chat-bubble>
+            `,
+          )}
         ${this.waiting
           ? html`<typing-indicator label=${waitingLabel}></typing-indicator>`
           : null}
