@@ -12,7 +12,7 @@
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
     "test:mutation": "stryker run",
-    "deploy:cf": "npm run build && wrangler pages deploy dist --project-name=antibulling --branch=main"
+    "deploy:cf": "npm run build && npx wrangler pages deploy dist --project-name=antibulling --branch=main"
   },
   "dependencies": {
     "@lit-labs/router": "^0.1.4",
