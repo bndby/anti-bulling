@@ -24,6 +24,7 @@ npm run dev
 ```bash
 npm test
 npm run test:coverage
+npm run test:mutation
 npm run build
 ```
 
@@ -41,6 +42,8 @@ tests/
 ```
 
 Покрытие с порогами: `npm run test:coverage` (фокус на `src/services`, `src/ai`, `src/storage`, `src/components`).
+
+Мутационное тестирование (Stryker + Vitest): `npm run test:mutation`. HTML-отчёт — `reports/mutation/mutation.html`.
 
 ## Деплой
 
