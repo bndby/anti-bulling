@@ -202,13 +202,45 @@ export class PageTraining extends LitElement {
       margin-bottom: 1rem;
     }
     .composer {
-      display: grid;
-      grid-template-columns: 1fr auto auto;
-      gap: 0.45rem;
-      align-items: end;
+      display: flex;
+      align-items: flex-end;
+      gap: 0.15rem;
+      padding: 0.35rem 0.35rem 0.35rem 0.9rem;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--color-border);
+      background: var(--color-surface-2);
     }
-    .composer mdw-textarea {
-      width: 100%;
+    .composer:focus-within {
+      border-color: rgb(var(--mdw-color__primary));
+    }
+    .composer-input {
+      flex: 1;
+      min-width: 0;
+      margin: 0;
+      padding: 0.55rem 0.35rem 0.55rem 0;
+      border: none;
+      background: transparent;
+      color: var(--color-text);
+      font: inherit;
+      line-height: 1.4;
+      resize: none;
+      field-sizing: content;
+      max-height: 8rem;
+    }
+    .composer-input::placeholder {
+      color: var(--color-text-muted);
+    }
+    .composer-input:focus {
+      outline: none;
+    }
+    .composer-input:disabled {
+      opacity: 0.6;
+    }
+    .composer-actions {
+      display: flex;
+      align-items: center;
+      flex-shrink: 0;
+      gap: 0.05rem;
     }
     .icon-btn {
       color: rgb(var(--mdw-color__primary));
@@ -216,9 +248,6 @@ export class PageTraining extends LitElement {
     .icon-btn.active {
       color: rgb(var(--mdw-color__primary));
       background: rgb(var(--mdw-color__primary-container));
-    }
-    .send {
-      min-height: 48px;
     }
     .coach-box {
       margin: 0.75rem 0 1rem;
@@ -635,10 +664,10 @@ export class PageTraining extends LitElement {
           `
         : html`
             <div class="composer">
-              <mdw-textarea
-                outlined
-                rows="2"
-                label="Твой ответ"
+              <textarea
+                class="composer-input"
+                rows="1"
+                aria-label="Твой ответ"
                 .value=${this.input}
                 ?disabled=${this.busy}
                 @input=${(e: Event) => (this.input = (e.target as HTMLTextAreaElement).value)}
@@ -649,25 +678,27 @@ export class PageTraining extends LitElement {
                   }
                 }}
                 placeholder="Твой ответ…"
-              ></mdw-textarea>
-              ${this.voiceEnabled
-                ? html`<mdw-icon-button
-                    class="icon-btn ${this.listening ? 'active' : ''}"
-                    type="button"
-                    icon="mic"
-                    ?disabled=${this.busy}
-                    @click=${() => this.toggleVoice()}
-                    aria-label="Голосовой ввод"
-                  ></mdw-icon-button>`
-                : html`<span></span>`}
-              <mdw-button
-                filled
-                class="send"
-                ?disabled=${this.busy || !this.input.trim()}
-                @click=${() => this.send()}
-              >
-                ${this.busy ? '…' : '→'}
-              </mdw-button>
+              ></textarea>
+              <div class="composer-actions">
+                ${this.voiceEnabled
+                  ? html`<mdw-icon-button
+                      class="icon-btn ${this.listening ? 'active' : ''}"
+                      type="button"
+                      icon="mic"
+                      ?disabled=${this.busy}
+                      @click=${() => this.toggleVoice()}
+                      aria-label="Голосовой ввод"
+                    ></mdw-icon-button>`
+                  : null}
+                <mdw-icon-button
+                  filled
+                  type="button"
+                  icon=${this.busy ? 'hourglass_empty' : 'send'}
+                  ?disabled=${this.busy || !this.input.trim()}
+                  @click=${() => this.send()}
+                  aria-label="Отправить"
+                ></mdw-icon-button>
+              </div>
             </div>
           `}
 
