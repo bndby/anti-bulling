@@ -10,12 +10,13 @@ export class OfflineBanner extends LitElement {
       display: block;
     }
     .banner {
-      background: #5a3a12;
-      color: #ffe7b8;
+      background: rgb(var(--mdw-color__secondary-container));
+      color: rgb(var(--mdw-color__on-secondary-container));
       text-align: center;
       padding: 0.55rem 0.75rem;
       font-weight: 700;
       font-size: 0.9rem;
+      border-radius: 0 0 var(--radius-sm) var(--radius-sm);
     }
   `;
 
@@ -37,7 +38,9 @@ export class OfflineBanner extends LitElement {
 
   protected render() {
     if (!this.offline) return html``;
-    return html`<div class="banner">Нет сети — AI-тренировка недоступна. Прогресс и сценарии на устройстве сохранены.</div>`;
+    return html`<div class="banner" role="status">
+      Нет сети — AI-тренировка недоступна. Прогресс и сценарии на устройстве сохранены.
+    </div>`;
   }
 }
 

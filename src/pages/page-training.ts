@@ -3,6 +3,7 @@ import { customElement, state } from 'lit/decorators.js';
 import { animate } from 'motion';
 import { ConversationEngine } from '@/ai/conversation-engine';
 import '@/components/app-nav';
+import { pageLayoutStyles } from '@/styles/page-layout';
 import '@/components/chat-bubble';
 import '@/components/score-bars';
 import '@/components/typing-indicator';
@@ -27,6 +28,7 @@ import {
 } from '@/services/progress';
 import { getCharacter, getScenario, getJourney } from '@/services/scenario-loader';
 import { buildSceneBrief } from '@/services/scene-brief';
+import { getScenarioVisual } from '@/services/scenario-visuals';
 import {
   analyzeSpeechText,
   createSpeechRecognition,
@@ -57,6 +59,9 @@ export class PageTraining extends LitElement {
   @state() private sceneWho = '';
   @state() private sceneConflict = '';
   @state() private sceneSetup = '';
+  @state() private sceneWitnesses = false;
+  @state() private sceneImage = '';
+  @state() private characterAvatar = '';
   @state() private briefOpen = true;
   @state() private sceneEnded = false;
   @state() private endTitle = '';
@@ -71,15 +76,68 @@ export class PageTraining extends LitElement {
   private turns = 0;
   private recognition: SpeechRecognition | null = null;
 
-  static styles = css`
+  static styles = [pageLayoutStyles, css`
     .scene {
       background: var(--color-surface);
       border-radius: var(--radius-md);
-      padding: 0.85rem 1rem;
       margin-bottom: 1rem;
       border: 1px solid var(--color-border);
+      overflow: hidden;
+    }
+    .scene-visual {
+      position: relative;
+      height: 176px;
+      overflow: hidden;
+      background: rgb(var(--mdw-color__primary-container));
+    }
+    .scene-visual::after {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, transparent 35%, rgb(0 36 84 / 55%));
+      content: '';
+      pointer-events: none;
+    }
+    .scene-image {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .scene-place {
+      position: absolute;
+      z-index: 1;
+      left: 1rem;
+      bottom: 0.8rem;
+      margin: 0;
+      color: white;
+      font-size: 0.85rem;
+      font-weight: 800;
+      text-shadow: 0 1px 3px rgb(0 24 64 / 65%);
+    }
+    .character-avatar {
+      position: absolute;
+      z-index: 2;
+      right: 1rem;
+      bottom: -34px;
+      width: 86px;
+      height: 86px;
+      overflow: hidden;
+      border: 3px solid var(--color-surface);
+      border-radius: 50%;
+      background: rgb(var(--mdw-color__surface-container-high));
+      box-shadow: 0 6px 16px rgb(0 59 135 / 22%);
+    }
+    .character-avatar img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .scene-body {
+      padding: 1rem;
     }
     .scene h2 {
+      max-width: calc(100% - 94px);
       margin: 0 0 0.35rem;
       font-family: var(--font-display);
       font-size: 1.15rem;
@@ -91,19 +149,20 @@ export class PageTraining extends LitElement {
       margin-bottom: 0.65rem;
     }
     .pill {
-      font-size: 0.78rem;
-      font-weight: 800;
-      padding: 0.3rem 0.55rem;
-      border-radius: 999px;
-      background: var(--color-bg-elevated);
-      color: var(--color-text-muted);
-      border: 1px solid var(--color-border);
+      --mdw-density: -2;
+      pointer-events: none;
     }
     .setup {
       margin: 0;
       color: var(--color-text);
       font-size: 0.95rem;
       line-height: 1.45;
+    }
+    .scene-fact {
+      margin: 0.65rem 0 0;
+      color: var(--color-text-muted);
+      font-size: 0.88rem;
+      line-height: 1.4;
     }
     .setup-label {
       display: block;
@@ -115,14 +174,7 @@ export class PageTraining extends LitElement {
       margin-bottom: 0.35rem;
     }
     .toggle-brief {
-      appearance: none;
-      border: none;
-      background: transparent;
-      color: var(--color-text-muted);
-      font-weight: 800;
-      font-size: 0.85rem;
-      padding: 0.35rem 0 0;
-      cursor: pointer;
+      color: rgb(var(--mdw-color__primary));
     }
     .scene p.hint {
       margin: 0.55rem 0 0;
@@ -139,42 +191,25 @@ export class PageTraining extends LitElement {
       gap: 0.45rem;
       align-items: end;
     }
-    .composer textarea {
-      border-radius: var(--radius-sm);
-      border: 1px solid var(--color-border);
-      background: var(--color-bg-elevated);
-      color: var(--color-text);
-      padding: 0.75rem;
-      min-height: 64px;
-      resize: vertical;
+    .composer mdw-textarea {
       width: 100%;
     }
     .icon-btn {
-      appearance: none;
-      border: none;
-      background: var(--color-surface);
-      color: var(--color-text);
-      border-radius: var(--radius-sm);
-      width: 48px;
-      height: 48px;
-      font-size: 1.25rem;
-      cursor: pointer;
-      border: 1px solid var(--color-border);
+      color: rgb(var(--mdw-color__primary));
     }
     .icon-btn.active {
-      background: var(--color-primary-dim);
-      border-color: var(--color-primary);
+      color: rgb(var(--mdw-color__primary));
+      background: rgb(var(--mdw-color__primary-container));
     }
     .send {
-      height: 48px;
-      padding: 0 1rem;
+      min-height: 48px;
     }
     .coach-box {
       margin: 0.75rem 0 1rem;
       padding: 0.85rem;
       border-radius: var(--radius-md);
-      background: #1e3d4a;
-      border: 1px solid rgba(62, 207, 142, 0.25);
+      background: rgb(var(--mdw-color__secondary-container));
+      border: 1px solid rgb(var(--mdw-color__outline-variant));
     }
     .actions {
       display: grid;
@@ -185,9 +220,9 @@ export class PageTraining extends LitElement {
       margin: 0 0 0.75rem;
       padding: 0.75rem 0.9rem;
       border-radius: var(--radius-sm);
-      background: #3a2424;
-      border: 1px solid rgba(232, 93, 93, 0.45);
-      color: #ffc9c9;
+      background: rgb(var(--mdw-color__error-container));
+      border: 1px solid rgb(var(--mdw-color__error));
+      color: rgb(var(--mdw-color__on-error-container));
       font-weight: 700;
       font-size: 0.95rem;
       line-height: 1.35;
@@ -196,12 +231,16 @@ export class PageTraining extends LitElement {
       margin: 0 0 0.75rem;
       padding: 1rem 1.05rem;
       border-radius: var(--radius-md);
-      border: 1px solid rgba(62, 207, 142, 0.35);
-      background: linear-gradient(135deg, #1e3d4a, #24352f);
+      border: 1px solid rgb(var(--mdw-color__primary));
+      background: linear-gradient(
+        135deg,
+        rgb(var(--mdw-color__primary-container)),
+        rgb(var(--mdw-color__secondary-container))
+      );
     }
     .end-banner.pressure {
-      border-color: rgba(240, 199, 94, 0.4);
-      background: linear-gradient(135deg, #3a3218, #2a2412);
+      border-color: rgb(var(--mdw-color__tertiary));
+      background: rgb(var(--mdw-color__surface-container-high));
     }
     .end-banner h3 {
       margin: 0 0 0.4rem;
@@ -217,7 +256,7 @@ export class PageTraining extends LitElement {
     .composer[hidden] {
       display: none;
     }
-  `;
+  `];
 
   async connectedCallback(): Promise<void> {
     super.connectedCallback();
@@ -243,6 +282,10 @@ export class PageTraining extends LitElement {
     this.sceneWhere = brief.where;
     this.sceneWho = brief.who;
     this.sceneConflict = brief.conflictLabel;
+    this.sceneWitnesses = Boolean(scenario.witnesses);
+    const visual = getScenarioVisual(scenario);
+    this.sceneImage = visual.sceneImage;
+    this.characterAvatar = visual.avatarImage;
     this.briefOpen = true;
 
     const progress = await getProgress();
@@ -379,7 +422,7 @@ export class PageTraining extends LitElement {
     progress = addTrainingMinutes(progress, minutes);
     if (completed) {
       progress = markSessionComplete(progress);
-      await this.unlockStoryProgress();
+      progress = await this.unlockStoryProgress(progress);
     }
     await saveProgress(progress);
 
@@ -416,10 +459,10 @@ export class PageTraining extends LitElement {
     navigate('/progress');
   }
 
-  private async unlockStoryProgress() {
-    if (this.launch?.mode !== 'story' || !this.engine) return;
+  private async unlockStoryProgress(progress: ProgressState): Promise<ProgressState> {
+    if (this.launch?.mode !== 'story' || !this.engine) return progress;
     const nodeId = this.engine.scenario.journeyNodeId;
-    if (!nodeId) return;
+    if (!nodeId) return progress;
     const state = await getScenarioState();
     if (!state.completedScenarioIds.includes(this.engine.scenario.id)) {
       state.completedScenarioIds.push(this.engine.scenario.id);
@@ -428,7 +471,6 @@ export class PageTraining extends LitElement {
 
     const journey = getJourney();
     const node = journey.nodes.find((n) => n.id === nodeId);
-    const progress = this.engine.getProgress();
     const unlocked = new Set(progress.unlockedJourneyNodes);
     unlocked.add(nodeId);
     const next = journey.nodes.find((n) => n.unlockAfter === nodeId);
@@ -440,6 +482,7 @@ export class PageTraining extends LitElement {
     }
     progress.unlockedJourneyNodes = [...unlocked];
     this.engine.setProgress(progress);
+    return progress;
   }
 
   private toggleVoice() {
@@ -472,48 +515,62 @@ export class PageTraining extends LitElement {
     const waitingLabel =
       this.launch?.mode === 'exam' ? 'Отвечает…' : 'Тренер и собеседник думают…';
     return html`
-      <app-nav back="/"></app-nav>
+      <app-nav back="/" title="Тренировка"></app-nav>
       <div class="scene">
-        <h2>${this.scenarioTitle || 'Тренировка'}</h2>
-        ${this.examLabel
-          ? html`<p class="hint">${this.examLabel}</p>`
-          : null}
-        <div class="meta-row">
-          ${this.sceneWhere
-            ? html`<span class="pill">${this.sceneWhere}</span>`
-            : null}
-          ${this.sceneWho ? html`<span class="pill">${this.sceneWho}</span>` : null}
-          ${this.sceneConflict
-            ? html`<span class="pill">${this.sceneConflict}</span>`
-            : null}
+        <div class="scene-visual">
+          <img class="scene-image" src=${this.sceneImage} alt="" />
+          <p class="scene-place">${this.sceneWhere}</p>
+          <div class="character-avatar">
+            <img src=${this.characterAvatar} alt=${this.sceneWho || 'Собеседник'} />
+          </div>
         </div>
-        ${this.briefOpen && this.sceneSetup
-          ? html`
-              <span class="setup-label">Что привело к конфликту</span>
-              <p class="setup">${this.sceneSetup}</p>
-              <button
-                type="button"
-                class="toggle-brief"
-                @click=${() => (this.briefOpen = false)}
-              >
-                Свернуть
-              </button>
-            `
-          : this.sceneSetup
+        <div class="scene-body">
+          <h2>${this.scenarioTitle || 'Тренировка'}</h2>
+          ${this.examLabel
+            ? html`<p class="hint">${this.examLabel}</p>`
+            : null}
+          <div class="meta-row">
+            ${this.sceneWhere
+              ? html`<mdw-chip class="pill">${this.sceneWhere}</mdw-chip>`
+              : null}
+            ${this.sceneWho ? html`<mdw-chip class="pill">${this.sceneWho}</mdw-chip>` : null}
+            ${this.sceneConflict
+              ? html`<mdw-chip class="pill">${this.sceneConflict}</mdw-chip>`
+              : null}
+          </div>
+          ${this.briefOpen && this.sceneSetup
             ? html`
-                <button
+                <span class="setup-label">Что привело к конфликту</span>
+                <p class="setup">${this.sceneSetup}</p>
+                <p class="scene-fact">
+                  ${this.sceneWitnesses ? 'Рядом есть свидетели.' : 'Свидетелей почти нет.'}
+                </p>
+                <mdw-button
                   type="button"
                   class="toggle-brief"
-                  @click=${() => (this.briefOpen = true)}
+                  @click=${() => (this.briefOpen = false)}
                 >
-                  Показать, что произошло
-                </button>
+                  Свернуть
+                </mdw-button>
               `
-            : html`<p class="hint">Отвечай коротко. Без оправданий. Без агрессии.</p>`}
+            : this.sceneSetup
+              ? html`
+                  <mdw-button
+                    type="button"
+                    class="toggle-brief"
+                    @click=${() => (this.briefOpen = true)}
+                  >
+                    Показать, что произошло
+                  </mdw-button>
+                `
+              : html`<p class="hint">Отвечай коротко. Без оправданий. Без агрессии.</p>`}
+        </div>
       </div>
 
       <div class="feed">
-        ${this.messages.map((m) => html`<chat-bubble .message=${m}></chat-bubble>`)}
+        ${this.messages
+          .filter((message, index) => index !== 0 || message.role !== 'narrator')
+          .map((message) => html`<chat-bubble .message=${message}></chat-bubble>`)}
         ${this.waiting
           ? html`<typing-indicator label=${waitingLabel}></typing-indicator>`
           : null}
@@ -537,14 +594,17 @@ export class PageTraining extends LitElement {
             >
               <h3>${this.endTitle || 'Сцена завершена'}</h3>
               <p>${this.endSummary}</p>
-              <button class="btn btn-primary btn-block" @click=${() => this.finish(true)}>
+              <mdw-button filled class="btn-block" @click=${() => this.finish(true)}>
                 ${this.launch?.mode === 'exam' ? 'Дальше' : 'К прогрессу'}
-              </button>
+              </mdw-button>
             </div>
           `
         : html`
             <div class="composer">
-              <textarea
+              <mdw-textarea
+                outlined
+                rows="2"
+                label="Твой ответ"
                 .value=${this.input}
                 ?disabled=${this.busy}
                 @input=${(e: Event) => (this.input = (e.target as HTMLTextAreaElement).value)}
@@ -555,25 +615,25 @@ export class PageTraining extends LitElement {
                   }
                 }}
                 placeholder="Твой ответ…"
-              ></textarea>
+              ></mdw-textarea>
               ${this.voiceEnabled
-                ? html`<button
+                ? html`<mdw-icon-button
                     class="icon-btn ${this.listening ? 'active' : ''}"
                     type="button"
+                    icon="mic"
                     ?disabled=${this.busy}
                     @click=${() => this.toggleVoice()}
-                    title="Голос"
-                  >
-                    🎤
-                  </button>`
+                    aria-label="Голосовой ввод"
+                  ></mdw-icon-button>`
                 : html`<span></span>`}
-              <button
-                class="btn btn-primary send"
+              <mdw-button
+                filled
+                class="send"
                 ?disabled=${this.busy || !this.input.trim()}
                 @click=${() => this.send()}
               >
                 ${this.busy ? '…' : '→'}
-              </button>
+              </mdw-button>
             </div>
           `}
 
@@ -581,21 +641,22 @@ export class PageTraining extends LitElement {
         ${this.sceneEnded
           ? null
           : html`
-              <button
-                class="btn btn-secondary btn-block"
+              <mdw-button
+                outlined
+                class="btn-block"
                 ?disabled=${this.busy}
                 @click=${() => this.finish(true)}
               >
                 Завершить сцену
-              </button>
+              </mdw-button>
             `}
-        <button
-          class="btn btn-ghost btn-block"
+        <mdw-button
+          class="btn-block"
           ?disabled=${this.busy}
           @click=${() => this.finish(this.sceneEnded)}
         >
           Выйти
-        </button>
+        </mdw-button>
       </div>
     `;
   }

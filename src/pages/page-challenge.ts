@@ -1,12 +1,15 @@
 import { LitElement, html } from 'lit';
 import { customElement } from 'lit/decorators.js';
 import '@/components/app-nav';
+import { pageLayoutStyles } from '@/styles/page-layout';
 import { navigate, setTrainingLaunch } from '@/services/navigation';
 import { pickRandomScenario } from '@/services/scenario-loader';
 import { getSettings } from '@/storage/db';
 
 @customElement('page-challenge')
 export class PageChallenge extends LitElement {
+  static styles = pageLayoutStyles;
+
   private async start() {
     const settings = await getSettings();
     if (!settings.openRouterApiKey.trim()) {
@@ -20,10 +23,9 @@ export class PageChallenge extends LitElement {
 
   protected render() {
     return html`
-      <app-nav></app-nav>
-      <h1 class="page-title">Испытание</h1>
+      <app-nav title="Испытание"></app-nav>
       <p class="page-sub">Сложные сценарии (интенсивность 4–5). Готовься к давлению.</p>
-      <button class="btn btn-primary btn-block" @click=${() => this.start()}>В бой</button>
+      <mdw-button filled class="btn-block" @click=${() => this.start()}>В бой</mdw-button>
     `;
   }
 }

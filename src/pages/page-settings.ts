@@ -2,6 +2,7 @@ import { LitElement, css, html } from 'lit';
 import { customElement, state } from 'lit/decorators.js';
 import { DEFAULT_MODEL, type AppSettings } from '@/models/types';
 import '@/components/app-nav';
+import { pageLayoutStyles } from '@/styles/page-layout';
 import { hashPin } from '@/services/crypto';
 import { navigate } from '@/services/navigation';
 import { getProfile, getSettings, saveProfile, saveSettings } from '@/storage/db';
@@ -13,13 +14,13 @@ export class PageSettings extends LitElement {
     openRouterApiKey: '',
     model: DEFAULT_MODEL,
     voiceEnabled: true,
-    theme: 'dark',
+    theme: 'light',
   };
   @state() private pin = '';
   @state() private status = '';
   @state() private testing = false;
 
-  static styles = css`
+  static styles = [pageLayoutStyles, css`
     .hint {
       font-size: 0.9rem;
       color: var(--color-text-muted);
@@ -37,7 +38,13 @@ export class PageSettings extends LitElement {
     .status.err {
       color: var(--color-danger);
     }
-  `;
+    .check-row {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-weight: 700;
+    }
+  `];
 
   async connectedCallback(): Promise<void> {
     super.connectedCallback();
@@ -55,9 +62,7 @@ export class PageSettings extends LitElement {
     try {
       await saveSettings({ ...this.settings });
       const reply = await getAIService().chat(
-        [
-          { role: 'user', content: 'Ответь одним словом: ок' },
-        ],
+        [{ role: 'user', content: 'Ответь одним словом: ок' }],
         { temperature: 0 },
       );
       this.status = reply.trim() ? `Ключ работает: ${reply.slice(0, 40)}` : 'Пустой ответ';
@@ -84,18 +89,16 @@ export class PageSettings extends LitElement {
   protected render() {
     const err = this.status.toLowerCase().includes('ошиб') || this.status.includes('API');
     return html`
-      <app-nav></app-nav>
-      <h1 class="page-title">Настройки</h1>
+      <app-nav title="Настройки"></app-nav>
       <p class="hint">
-        Ключ хранится только на этом устройстве.
-        Получить ключ:
+        Ключ хранится только на этом устройстве. Получить ключ:
         <a href="https://openrouter.ai/keys" target="_blank" rel="noopener">openrouter.ai/keys</a>
       </p>
 
       <div class="field">
-        <label for="key">OpenRouter API-ключ</label>
-        <input
-          id="key"
+        <mdw-input
+          outlined
+          label="OpenRouter API-ключ"
           type="password"
           autocomplete="off"
           .value=${this.settings.openRouterApiKey}
@@ -105,13 +108,13 @@ export class PageSettings extends LitElement {
               openRouterApiKey: (e.target as HTMLInputElement).value,
             };
           }}
-        />
+        ></mdw-input>
       </div>
 
       <div class="field">
-        <label for="model">Модель</label>
-        <input
-          id="model"
+        <mdw-input
+          outlined
+          label="Модель"
           .value=${this.settings.model}
           @input=${(e: Event) => {
             this.settings = {
@@ -119,13 +122,12 @@ export class PageSettings extends LitElement {
               model: (e.target as HTMLInputElement).value || DEFAULT_MODEL,
             };
           }}
-        />
+        ></mdw-input>
       </div>
 
       <div class="field">
-        <label>
-          <input
-            type="checkbox"
+        <label class="check-row">
+          <mdw-checkbox
             .checked=${this.settings.voiceEnabled}
             @change=${(e: Event) => {
               this.settings = {
@@ -133,47 +135,46 @@ export class PageSettings extends LitElement {
                 voiceEnabled: (e.target as HTMLInputElement).checked,
               };
             }}
-          />
+          ></mdw-checkbox>
           Голосовой ввод
         </label>
       </div>
 
-      <button class="btn btn-primary btn-block" type="button" @click=${() => this.save()}>
+      <mdw-button filled class="btn-block" type="button" @click=${() => this.save()}>
         Сохранить
-      </button>
+      </mdw-button>
       <div style="height:0.65rem"></div>
-      <button
-        class="btn btn-secondary btn-block"
+      <mdw-button
+        outlined
+        class="btn-block"
         type="button"
         ?disabled=${this.testing}
         @click=${() => this.testKey()}
       >
         ${this.testing ? 'Проверка…' : 'Проверить ключ'}
-      </button>
+      </mdw-button>
 
       <h2 class="page-title" style="font-size:1.25rem;margin-top:1.75rem">PIN родителя</h2>
       <div class="field">
-        <label for="pin">4 цифры</label>
-        <input
-          id="pin"
+        <mdw-input
+          outlined
+          label="4 цифры"
           inputmode="numeric"
           maxlength="4"
           .value=${this.pin}
           @input=${(e: Event) => (this.pin = (e.target as HTMLInputElement).value)}
-        />
+        ></mdw-input>
       </div>
-      <button class="btn btn-secondary btn-block" type="button" @click=${() => this.savePin()}>
+      <mdw-button outlined class="btn-block" type="button" @click=${() => this.savePin()}>
         Установить PIN
-      </button>
+      </mdw-button>
 
-      ${this.status
-        ? html`<p class="status ${err ? 'err' : ''}">${this.status}</p>`
-        : null}
+      ${this.status ? html`<p class="status ${err ? 'err' : ''}">${this.status}</p>` : null}
 
       <div style="height:1rem"></div>
-      <button class="btn btn-ghost btn-block" type="button" @click=${() => navigate('/')}>
+      <mdw-button class="btn-block" type="button" @click=${() => navigate('/')}>
         На главную
-      </button>
+      </mdw-button>
     `;
   }
 }

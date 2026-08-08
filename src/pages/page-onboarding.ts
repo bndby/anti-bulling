@@ -1,6 +1,7 @@
 import { LitElement, css, html } from 'lit';
 import { customElement, state } from 'lit/decorators.js';
 import type { AgeBand } from '@/models/types';
+import { pageLayoutStyles } from '@/styles/page-layout';
 import { createId } from '@/services/crypto';
 import { navigate } from '@/services/navigation';
 import { saveProfile, saveProgress, saveScenarioState } from '@/storage/db';
@@ -12,14 +13,14 @@ export class PageOnboarding extends LitElement {
   @state() private ageBand: AgeBand = '12-14';
   @state() private saving = false;
 
-  static styles = css`
+  static styles = [pageLayoutStyles, css`
     .brand {
       font-family: var(--font-display);
       font-size: clamp(2rem, 8vw, 2.6rem);
       font-weight: 700;
       margin: 2rem 0 0.5rem;
       letter-spacing: -0.03em;
-      background: linear-gradient(120deg, #fff 20%, var(--color-primary));
+      background: linear-gradient(120deg, var(--color-primary) 15%, #79b9ff 90%);
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
@@ -30,19 +31,10 @@ export class PageOnboarding extends LitElement {
       gap: 0.5rem;
     }
     .age {
-      border: 1px solid var(--color-border);
-      background: var(--color-surface);
-      color: var(--color-text);
-      border-radius: var(--radius-sm);
-      padding: 0.75rem 0.25rem;
-      font-weight: 800;
-      cursor: pointer;
+      width: 100%;
+      justify-content: center;
     }
-    .age.active {
-      border-color: var(--color-primary);
-      background: var(--color-primary-dim);
-    }
-  `;
+  `];
 
   private async submit(e: Event) {
     e.preventDefault();
@@ -66,38 +58,45 @@ export class PageOnboarding extends LitElement {
   protected render() {
     return html`
       <p class="brand">АнтиБуллинг</p>
-      <p class="page-sub">Потренируемся отвечать спокойно и уверенно. Без регистрации — всё на этом устройстве.</p>
+      <p class="page-sub">
+        Потренируемся отвечать спокойно и уверенно. Без регистрации — всё на этом устройстве.
+      </p>
       <form @submit=${this.submit}>
         <div class="field">
-          <label for="name">Как тебя зовут?</label>
-          <input
-            id="name"
+          <mdw-input
+            outlined
+            label="Как тебя зовут?"
             .value=${this.name}
             @input=${(e: Event) => (this.name = (e.target as HTMLInputElement).value)}
             maxlength="24"
             required
             autocomplete="nickname"
-          />
+          ></mdw-input>
         </div>
         <div class="field">
           <label>Возраст</label>
           <div class="ages">
             ${(['10-11', '12-14', '15-16'] as AgeBand[]).map(
               (a) => html`
-                <button
-                  type="button"
-                  class="age ${this.ageBand === a ? 'active' : ''}"
+                <mdw-filter-chip
+                  class="age"
+                  ?checked=${this.ageBand === a}
                   @click=${() => (this.ageBand = a)}
                 >
                   ${a}
-                </button>
+                </mdw-filter-chip>
               `,
             )}
           </div>
         </div>
-        <button class="btn btn-primary btn-block" ?disabled=${this.saving || !this.name.trim()}>
+        <mdw-button
+          filled
+          type="submit"
+          class="btn-block"
+          ?disabled=${this.saving || !this.name.trim()}
+        >
           Начать
-        </button>
+        </mdw-button>
       </form>
     `;
   }

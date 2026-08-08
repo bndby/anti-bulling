@@ -19,8 +19,8 @@ export default defineConfig({
         name: 'AI Anti-Bullying Trainer',
         short_name: 'АнтиБуллинг',
         description: 'AI-симулятор для тренировки уверенных ответов на буллинг',
-        theme_color: '#1a5f4a',
-        background_color: '#0f2e26',
+        theme_color: '#0078f0',
+        background_color: '#ffffff',
         display: 'standalone',
         lang: 'ru',
         start_url: base,
@@ -45,7 +45,7 @@ export default defineConfig({
         ],
       },
       workbox: {
-        globPatterns: ['**/*.{js,css,html,ico,png,svg,json,md,woff2}'],
+        globPatterns: ['**/*.{js,css,html,ico,png,webp,svg,json,md,woff2}'],
         navigateFallback: `${base}index.html`.replace(/\/{2,}/g, '/'),
       },
       devOptions: {

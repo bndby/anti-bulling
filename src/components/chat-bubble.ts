@@ -36,8 +36,8 @@ export class ChatBubble extends LitElement {
       opacity: 0.75;
     }
     .bully {
-      background: #3a2430;
-      border: 1px solid rgba(232, 93, 93, 0.25);
+      background: rgb(var(--mdw-color__surface-container-high));
+      border: 1px solid rgb(var(--mdw-color__outline-variant));
     }
     .user {
       background: var(--color-surface-2);
@@ -45,19 +45,19 @@ export class ChatBubble extends LitElement {
       border: 1px solid var(--color-border);
     }
     .coach {
-      background: #1e3d4a;
-      border: 1px solid rgba(62, 207, 142, 0.25);
+      background: rgb(var(--mdw-color__secondary-container));
+      border: 1px solid rgb(var(--mdw-color__outline-variant));
       max-width: 100%;
     }
     .system {
-      background: #3a2424;
-      border: 1px solid rgba(232, 93, 93, 0.45);
-      color: #ffc9c9;
+      background: rgb(var(--mdw-color__error-container));
+      border: 1px solid rgb(var(--mdw-color__error));
+      color: rgb(var(--mdw-color__on-error-container));
       max-width: 100%;
     }
     .narrator {
-      background: #24352f;
-      border: 1px solid rgba(62, 207, 142, 0.28);
+      background: rgb(var(--mdw-color__surface-container-low));
+      border: 1px solid rgb(var(--mdw-color__outline-variant));
       max-width: 100%;
       color: var(--color-text);
     }

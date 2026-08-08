@@ -2,6 +2,7 @@ import { LitElement, css, html } from 'lit';
 import { customElement, state } from 'lit/decorators.js';
 import { animate } from 'motion';
 import '@/components/app-nav';
+import { pageLayoutStyles } from '@/styles/page-layout';
 import type { ProgressState } from '@/models/types';
 import achievements from '@/content/achievements.json';
 import { navigate } from '@/services/navigation';
@@ -12,7 +13,7 @@ import { getProgress } from '@/storage/db';
 export class PageProgress extends LitElement {
   @state() private progress?: ProgressState;
 
-  static styles = css`
+  static styles = [pageLayoutStyles, css`
     .rpg {
       display: grid;
       gap: 0.55rem;
@@ -28,13 +29,17 @@ export class PageProgress extends LitElement {
     .track {
       grid-column: 1 / -1;
       height: 10px;
-      background: var(--color-bg-elevated);
+      background: rgb(var(--mdw-color__surface-container-highest));
       border-radius: 99px;
       overflow: hidden;
     }
     .fill {
       height: 100%;
-      background: linear-gradient(90deg, #2aad74, var(--color-accent));
+      background: linear-gradient(
+        90deg,
+        rgb(var(--mdw-color__secondary)),
+        rgb(var(--mdw-color__primary))
+      );
     }
     .achs {
       display: grid;
@@ -43,8 +48,8 @@ export class PageProgress extends LitElement {
     .ach {
       padding: 0.85rem 1rem;
       border-radius: var(--radius-md);
-      background: var(--color-surface);
-      border: 1px solid var(--color-border);
+      background: rgb(var(--mdw-color__surface-container));
+      border: 1px solid rgb(var(--mdw-color__outline-variant));
     }
     .ach.locked {
       opacity: 0.45;
@@ -58,7 +63,7 @@ export class PageProgress extends LitElement {
       color: var(--color-text-muted);
       font-size: 0.85rem;
     }
-  `;
+  `];
 
   async connectedCallback(): Promise<void> {
     super.connectedCallback();
@@ -84,8 +89,7 @@ export class PageProgress extends LitElement {
     const unlocked = new Set(p.achievements);
 
     return html`
-      <app-nav></app-nav>
-      <h1 class="page-title">Прогресс</h1>
+      <app-nav title="Прогресс"></app-nav>
       <p class="page-sub">Уровень ${p.level} · Серия ${p.streakDays} дн. · Сессий ${p.totalSessions}</p>
 
       <div class="rpg">
@@ -113,9 +117,9 @@ export class PageProgress extends LitElement {
       </div>
 
       <div style="height:1rem"></div>
-      <button class="btn btn-primary btn-block" @click=${() => navigate('/practice')}>
+      <mdw-button filled class="btn-block" @click=${() => navigate('/practice')}>
         Ещё практика
-      </button>
+      </mdw-button>
     `;
   }
 }

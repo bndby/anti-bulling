@@ -96,7 +96,7 @@ export interface AppSettings {
   openRouterApiKey: string;
   model: string;
   voiceEnabled: boolean;
-  theme: 'dark';
+  theme: 'light';
 }
 
 export interface Profile {
@@ -211,5 +211,5 @@ export const DEFAULT_SETTINGS: AppSettings = {
   openRouterApiKey: '',
   model: DEFAULT_MODEL,
   voiceEnabled: true,
-  theme: 'dark',
+  theme: 'light',
 };

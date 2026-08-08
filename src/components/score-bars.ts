@@ -35,13 +35,17 @@ export class ScoreBars extends LitElement {
     .track {
       grid-column: 1 / -1;
       height: 8px;
-      background: var(--color-bg-elevated);
+      background: rgb(var(--mdw-color__surface-container-highest));
       border-radius: 99px;
       overflow: hidden;
     }
     .fill {
       height: 100%;
-      background: linear-gradient(90deg, var(--color-primary-dim), var(--color-primary));
+      background: linear-gradient(
+        90deg,
+        rgb(var(--mdw-color__secondary)),
+        rgb(var(--mdw-color__primary))
+      );
       border-radius: 99px;
     }
     .val {

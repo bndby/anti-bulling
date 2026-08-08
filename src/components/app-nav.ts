@@ -5,29 +5,42 @@ import { navigate } from '@/services/navigation';
 @customElement('app-nav')
 export class AppNav extends LitElement {
   @property() back = '/';
+  @property() title = '';
 
   static styles = css`
     :host {
-      display: flex;
-      justify-content: space-between;
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr) auto;
       align-items: center;
-      margin-bottom: 1rem;
+      min-height: 52px;
+      margin: -0.25rem -0.25rem 1rem;
+      padding: 0 0.25rem;
     }
-    button {
-      appearance: none;
-      border: none;
-      background: transparent;
-      color: var(--color-text-muted);
-      font-weight: 800;
-      font-size: 1rem;
-      cursor: pointer;
-      padding: 0.35rem 0;
+    mdw-icon-button {
+      color: rgb(var(--mdw-color__primary));
+    }
+    .title {
+      overflow: hidden;
+      margin: 0 0.5rem;
+      color: var(--color-text);
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
   `;
 
   protected render() {
     return html`
-      <button type="button" @click=${() => navigate(this.back)}>← Назад</button>
+      <mdw-icon-button
+        type="button"
+        icon="chevron_left"
+        aria-label="Назад"
+        @click=${() => navigate(this.back)}
+      ></mdw-icon-button>
+      <h1 class="title">${this.title}</h1>
       <slot></slot>
     `;
   }
