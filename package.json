@@ -10,6 +10,7 @@
     "preview": "vite preview",
     "test": "vitest run",
     "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
     "deploy:cf": "npm run build && wrangler pages deploy dist --project-name=antibulling --branch=main"
   },
   "dependencies": {
@@ -23,8 +24,11 @@
     "zod": "^4.4.3"
   },
   "devDependencies": {
+    "@open-wc/testing": "^5.0.0",
+    "@types/mocha": "^10.0.10",
     "@types/node": "^26.1.2",
     "@vitest/coverage-v8": "^4.1.10",
+    "fake-indexeddb": "^6.2.5",
     "jsdom": "^30.0.1",
     "typescript": "~6.0.2",
     "vite": "^8.2.0",

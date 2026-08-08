@@ -54,6 +54,15 @@ export function getDb(): Promise<IDBPDatabase<AntiBullyingDB>> {
   return dbPromise;
 }
 
+/** Close and drop the DB connection (tests / full reset). */
+export async function closeDb(): Promise<void> {
+  if (dbPromise) {
+    const db = await dbPromise;
+    db.close();
+    dbPromise = null;
+  }
+}
+
 export async function getSettings(): Promise<AppSettings> {
   const db = await getDb();
   return (await db.get('settings', SINGLETON)) ?? { ...DEFAULT_SETTINGS };

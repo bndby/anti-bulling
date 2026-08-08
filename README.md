@@ -23,8 +23,24 @@ npm run dev
 
 ```bash
 npm test
+npm run test:coverage
 npm run build
 ```
+
+## Тесты
+
+Vitest + jsdom + `@open-wc/testing` + `fake-indexeddb`.
+
+```txt
+tests/
+  setup.ts
+  helpers/          # fixture, mock-ai, fixtures
+  unit/             # services, ai, storage
+  integration/      # ConversationEngine с моками AI
+  components/       # Lit-компоненты
+```
+
+Покрытие с порогами: `npm run test:coverage` (фокус на `src/services`, `src/ai`, `src/storage`, `src/components`).
 
 ## Деплой
 

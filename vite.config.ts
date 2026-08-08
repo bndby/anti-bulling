@@ -56,5 +56,28 @@ export default defineConfig({
   test: {
     environment: 'jsdom',
     include: ['tests/**/*.test.ts'],
+    setupFiles: ['tests/setup.ts'],
+    coverage: {
+      provider: 'v8',
+      reporter: ['text', 'html', 'lcov'],
+      include: [
+        'src/services/**',
+        'src/ai/prompt-utils.ts',
+        'src/ai/schemas.ts',
+        'src/ai/conversation-engine.ts',
+        'src/storage/**',
+        'src/components/**',
+      ],
+      exclude: [
+        'src/services/scenario-visuals.ts',
+        'src/services/user-avatars.ts',
+        '**/*.d.ts',
+      ],
+      thresholds: {
+        lines: 80,
+        functions: 75,
+        statements: 80,
+      },
+    },
   },
 });
