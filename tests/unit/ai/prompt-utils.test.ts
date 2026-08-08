@@ -10,13 +10,17 @@ describe('prompt-utils', () => {
     expect(renderPrompt('Hi {{name}}', {})).toBe('Hi ');
   });
 
-  it('extracts json from fences', () => {
-    const data = extractJson<{ a: number }>('```json\n{"a":1}\n```');
-    expect(data.a).toBe(1);
+  it('extracts json from fences with and without json tag', () => {
+    expect(extractJson<{ a: number }>('```json\n{"a":1}\n```')).toEqual({ a: 1 });
+    expect(extractJson<{ a: number }>('```\n{"a":2}\n```')).toEqual({ a: 2 });
   });
 
   it('extracts raw json objects', () => {
-    const data = extractJson<{ ok: boolean }>('prefix {"ok":true} suffix');
-    expect(data.ok).toBe(true);
+    expect(extractJson<{ ok: boolean }>('prefix {"ok":true} suffix')).toEqual({ ok: true });
+  });
+
+  it('throws when json object braces are missing', () => {
+    expect(() => extractJson('нет объекта')).toThrow('JSON не найден в ответе модели');
+    expect(() => extractJson('{broken')).toThrow('JSON не найден в ответе модели');
   });
 });

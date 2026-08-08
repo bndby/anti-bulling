@@ -41,9 +41,9 @@ tests/
   components/       # Lit-компоненты
 ```
 
-Покрытие с порогами: `npm run test:coverage` (фокус на `src/services`, `src/ai`, `src/storage`, `src/components`).
+Покрытие с порогами: `npm run test:coverage` (services, storage, components, ключевые AI-модули, `models/types`).
 
-Мутационное тестирование (Stryker + Vitest): `npm run test:mutation`. HTML-отчёт — `reports/mutation/mutation.html`.
+Мутационное тестирование (Stryker + Vitest): `npm run test:mutation` — тот же набор файлов, что и coverage. HTML-отчёт — `reports/mutation/mutation.html`.
 
 ## Деплой
 

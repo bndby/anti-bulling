@@ -32,6 +32,7 @@ describe('bottom-nav', () => {
       b.textContent?.includes('Главная'),
     );
     expect(home?.classList.contains('active')).toBe(true);
+    expect(home?.getAttribute('aria-current')).toBe('page');
   });
 
   it('navigates on primary click', async () => {
@@ -43,7 +44,39 @@ describe('bottom-nav', () => {
     expect(navigate).toHaveBeenCalledWith('/practice');
   });
 
-  it('opens more menu', async () => {
+  it('opens more menu with all destinations and navigates', async () => {
+    vi.mocked(currentAppPath).mockReturnValue('/settings');
+    const el = await fixture<BottomNav>(html`<bottom-nav></bottom-nav>`);
+    const more = [...el.shadowRoot!.querySelectorAll('button.item')].find((b) =>
+      b.textContent?.includes('Ещё'),
+    ) as HTMLButtonElement;
+    expect(more.classList.contains('more-active')).toBe(true);
+    more.click();
+    await el.updateComplete;
+    const menu = el.shadowRoot!.querySelector('[role="menu"]');
+    expect(menu).toBeTruthy();
+    const labels = [...el.shadowRoot!.querySelectorAll('[role="menuitem"]')].map(
+      (b) => b.textContent?.replace(/\s+/g, ' ').trim(),
+    );
+    expect(labels).toEqual(
+      expect.arrayContaining([
+        expect.stringContaining('История'),
+        expect.stringContaining('Свободный чат'),
+        expect.stringContaining('Испытание'),
+        expect.stringContaining('Экзамен'),
+        expect.stringContaining('Родителям'),
+        expect.stringContaining('Настройки'),
+      ]),
+    );
+    const settings = [...el.shadowRoot!.querySelectorAll('[role="menuitem"]')].find((b) =>
+      b.textContent?.includes('Настройки'),
+    ) as HTMLButtonElement;
+    expect(settings.classList.contains('active')).toBe(true);
+    settings.click();
+    expect(navigate).toHaveBeenCalledWith('/settings');
+  });
+
+  it('closes menu on route sync and removes listeners on disconnect', async () => {
     const el = await fixture<BottomNav>(html`<bottom-nav></bottom-nav>`);
     const more = [...el.shadowRoot!.querySelectorAll('button.item')].find((b) =>
       b.textContent?.includes('Ещё'),
@@ -51,6 +84,9 @@ describe('bottom-nav', () => {
     more.click();
     await el.updateComplete;
     expect(el.shadowRoot!.querySelector('[role="menu"]')).toBeTruthy();
-    expect(el.shadowRoot!.textContent).toContain('Настройки');
+    window.dispatchEvent(new PopStateEvent('popstate'));
+    await el.updateComplete;
+    expect(el.shadowRoot!.querySelector('[role="menu"]')).toBeNull();
+    el.remove();
   });
 });
