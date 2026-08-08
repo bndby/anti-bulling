@@ -1,7 +1,6 @@
 import { LitElement, css, html } from 'lit';
 import { customElement, state } from 'lit/decorators.js';
 import { DEFAULT_MODEL, type AppSettings } from '@/models/types';
-import '@/components/app-nav';
 import { pageLayoutStyles } from '@/styles/page-layout';
 import { hashPin } from '@/services/crypto';
 import { navigate } from '@/services/navigation';
@@ -89,7 +88,6 @@ export class PageSettings extends LitElement {
   protected render() {
     const err = this.status.toLowerCase().includes('ошиб') || this.status.includes('API');
     return html`
-      <app-nav title="Настройки"></app-nav>
       <p class="hint">
         Ключ хранится только на этом устройстве. Получить ключ:
         <a href="https://openrouter.ai/keys" target="_blank" rel="noopener">openrouter.ai/keys</a>

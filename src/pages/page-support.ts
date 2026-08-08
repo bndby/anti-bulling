@@ -1,6 +1,5 @@
 import { LitElement, css, html } from 'lit';
 import { customElement } from 'lit/decorators.js';
-import '@/components/app-nav';
 import { pageLayoutStyles } from '@/styles/page-layout';
 import { navigate } from '@/services/navigation';
 
@@ -31,7 +30,6 @@ export class PageSupport extends LitElement {
 
   protected render() {
     return html`
-      <app-nav title="Ты не один"></app-nav>
       <div class="box">
         <h2>Тренировка остановлена</h2>
         <p>

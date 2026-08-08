@@ -1,7 +1,6 @@
 import { LitElement, css, html } from 'lit';
 import { customElement, state } from 'lit/decorators.js';
 import { animate } from 'motion';
-import '@/components/app-nav';
 import { pageLayoutStyles } from '@/styles/page-layout';
 import type { ProgressState } from '@/models/types';
 import achievements from '@/content/achievements.json';
@@ -89,7 +88,6 @@ export class PageProgress extends LitElement {
     const unlocked = new Set(p.achievements);
 
     return html`
-      <app-nav title="Прогресс"></app-nav>
       <p class="page-sub">Уровень ${p.level} · Серия ${p.streakDays} дн. · Сессий ${p.totalSessions}</p>
 
       <div class="rpg">

@@ -1,6 +1,5 @@
 import { LitElement, html } from 'lit';
 import { customElement } from 'lit/decorators.js';
-import '@/components/app-nav';
 import { pageLayoutStyles } from '@/styles/page-layout';
 import { navigate, setTrainingLaunch } from '@/services/navigation';
 import { pickExamScenarios } from '@/services/scenario-loader';
@@ -28,7 +27,6 @@ export class PageExam extends LitElement {
 
   protected render() {
     return html`
-      <app-nav title="Экзамен"></app-nav>
       <p class="page-sub">10 ситуаций подряд. Без подсказок тренера. Держи границы.</p>
       <mdw-button filled class="btn-block" @click=${() => this.start()}>
         Начать экзамен

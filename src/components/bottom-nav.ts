@@ -2,6 +2,7 @@ import { LitElement, css, html } from 'lit';
 import { customElement, state } from 'lit/decorators.js';
 import { currentAppPath } from '@/services/base-path';
 import { navigate } from '@/services/navigation';
+import '@shortfuse/materialdesignweb/components/BottomAppBar.js';
 
 type NavigationItem = {
   path: string;
@@ -40,12 +41,12 @@ export class BottomNav extends LitElement {
       font-family: var(--font-body);
     }
 
-    .nav {
+    mdw-bottom-app-bar {
       position: relative;
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      align-items: stretch;
-      min-height: 68px;
+      display: block;
+      box-sizing: border-box;
+      width: 100%;
+      height: 68px;
       padding: 6px 8px;
       border: 1px solid rgb(var(--mdw-color__outline-variant));
       border-bottom: 0;
@@ -53,6 +54,14 @@ export class BottomNav extends LitElement {
       background: rgb(var(--mdw-color__surface-container-lowest) / 96%);
       box-shadow: 0 -8px 28px rgb(23 76 132 / 12%);
       backdrop-filter: blur(16px);
+    }
+
+    .nav {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      align-items: stretch;
+      width: 100%;
+      height: 100%;
     }
 
     .item {
@@ -164,50 +173,52 @@ export class BottomNav extends LitElement {
     const path = currentAppPath();
     const isMoreActive = MORE_ITEMS.some((item) => item.path === path);
     return html`
-      <nav class="nav" aria-label="Основная навигация">
-        ${PRIMARY_ITEMS.map(
-          (item) => html`
-            <button
-              class="item ${path === item.path ? 'active' : ''}"
-              type="button"
-              aria-current=${path === item.path ? 'page' : 'false'}
-              @click=${() => this.select(item.path)}
-            >
-              <span class="icon-wrap"><mdw-icon icon=${item.icon}></mdw-icon></span>
-              <span>${item.label}</span>
-            </button>
-          `,
-        )}
-        <button
-          class="item ${isMoreActive ? 'more-active' : ''}"
-          type="button"
-          aria-expanded=${String(this.moreOpen)}
-          aria-label="Остальные разделы"
-          @click=${() => (this.moreOpen = !this.moreOpen)}
-        >
-          <span class="icon-wrap"><mdw-icon icon="more_horiz"></mdw-icon></span>
-          <span>Ещё</span>
-        </button>
-        ${this.moreOpen
-          ? html`
-              <div class="menu" role="menu">
-                ${MORE_ITEMS.map(
-                  (item) => html`
-                    <button
-                      class="menu-item ${path === item.path ? 'active' : ''}"
-                      type="button"
-                      role="menuitem"
-                      @click=${() => this.select(item.path)}
-                    >
-                      <mdw-icon icon=${item.icon}></mdw-icon>
-                      <span>${item.label}</span>
-                    </button>
-                  `,
-                )}
-              </div>
-            `
-          : null}
-      </nav>
+      <mdw-bottom-app-bar aria-label="Основная навигация">
+        <nav class="nav">
+          ${PRIMARY_ITEMS.map(
+            (item) => html`
+              <button
+                class="item ${path === item.path ? 'active' : ''}"
+                type="button"
+                aria-current=${path === item.path ? 'page' : 'false'}
+                @click=${() => this.select(item.path)}
+              >
+                <span class="icon-wrap"><mdw-icon icon=${item.icon}></mdw-icon></span>
+                <span>${item.label}</span>
+              </button>
+            `,
+          )}
+          <button
+            class="item ${isMoreActive ? 'more-active' : ''}"
+            type="button"
+            aria-expanded=${String(this.moreOpen)}
+            aria-label="Остальные разделы"
+            @click=${() => (this.moreOpen = !this.moreOpen)}
+          >
+            <span class="icon-wrap"><mdw-icon icon="more_horiz"></mdw-icon></span>
+            <span>Ещё</span>
+          </button>
+          ${this.moreOpen
+            ? html`
+                <div class="menu" role="menu">
+                  ${MORE_ITEMS.map(
+                    (item) => html`
+                      <button
+                        class="menu-item ${path === item.path ? 'active' : ''}"
+                        type="button"
+                        role="menuitem"
+                        @click=${() => this.select(item.path)}
+                      >
+                        <mdw-icon icon=${item.icon}></mdw-icon>
+                        <span>${item.label}</span>
+                      </button>
+                    `,
+                  )}
+                </div>
+              `
+            : null}
+        </nav>
+      </mdw-bottom-app-bar>
     `;
   }
 }

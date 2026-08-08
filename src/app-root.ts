@@ -2,6 +2,7 @@ import { Router } from '@lit-labs/router';
 import { LitElement, css, html } from 'lit';
 import { customElement, state } from 'lit/decorators.js';
 import { currentAppPath, withBase } from '@/services/base-path';
+import { navigate } from '@/services/navigation';
 import { getProfile } from '@/storage/db';
 
 import '@/pages/page-onboarding';
@@ -16,12 +17,26 @@ import '@/pages/page-training';
 import '@/pages/page-progress';
 import '@/pages/page-parent';
 import '@/pages/page-support';
+import '@/components/app-nav';
 import '@/components/bottom-nav';
 import '@/components/offline-banner';
 
 function route(path: string): string {
   return withBase(path);
 }
+
+const APP_BAR_TITLES: Record<string, string> = {
+  '/settings': 'Настройки',
+  '/practice': 'Практика',
+  '/story': 'История',
+  '/chat': 'Свободный чат',
+  '/exam': 'Экзамен',
+  '/challenge': 'Испытание',
+  '/training': 'Тренировка',
+  '/progress': 'Прогресс',
+  '/parent': 'Родителям',
+  '/support': 'Ты не один',
+};
 
 @customElement('app-root')
 export class AppRoot extends LitElement {
@@ -52,6 +67,9 @@ export class AppRoot extends LitElement {
       min-height: 100dvh;
       margin: 0 auto;
       padding: 1rem 1rem calc(6rem + env(safe-area-inset-bottom, 0px));
+    }
+    .app-shell.with-top-bar {
+      padding-top: calc(1rem + 68px);
     }
   `;
 
@@ -90,15 +108,33 @@ export class AppRoot extends LitElement {
 
   private onPopState = () => this.requestUpdate();
 
+  private handleAppBarBack = () => {
+    if (currentAppPath() === '/training') {
+      window.dispatchEvent(new CustomEvent('training-exit-request'));
+      return;
+    }
+    navigate('/');
+  };
+
   protected render() {
     if (!this.ready) {
       return html`<div class="app-shell"><p class="page-sub">Загрузка…</p></div>`;
     }
     const path = currentAppPath();
-    const showBottomNav = !['/onboarding', '/training', '/support'].includes(path);
+    const title = APP_BAR_TITLES[path];
+    const showAppBar = Boolean(title);
+    const showBottomNav = path !== '/onboarding';
     return html`
       <offline-banner></offline-banner>
-      <div class="app-shell">${this.router.outlet()}</div>
+      ${showAppBar
+        ? html`
+            <app-nav
+              .title=${title}
+              .backAction=${this.handleAppBarBack}
+            ></app-nav>
+          `
+        : null}
+      <div class="app-shell ${showAppBar ? 'with-top-bar' : ''}">${this.router.outlet()}</div>
       ${showBottomNav ? html`<bottom-nav></bottom-nav>` : null}
     `;
   }

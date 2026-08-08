@@ -1,6 +1,5 @@
 import { LitElement, css, html } from 'lit';
 import { customElement, state } from 'lit/decorators.js';
-import '@/components/app-nav';
 import { pageLayoutStyles } from '@/styles/page-layout';
 import type { ParentAnalytics } from '@/services/parent-analytics';
 import { buildParentAnalytics } from '@/services/parent-analytics';
@@ -70,7 +69,6 @@ export class PageParent extends LitElement {
   protected render() {
     if (!this.unlocked) {
       return html`
-        <app-nav title="Родителям"></app-nav>
         <p class="note">Без просмотра переписки. Только аналитика. PIN задаётся в настройках.</p>
         ${this.needsSetup
           ? html`<p class="note">PIN ещё не задан — откройте Настройки.</p>`
@@ -95,7 +93,6 @@ export class PageParent extends LitElement {
 
     const a = this.analytics!;
     return html`
-      <app-nav title="Аналитика"></app-nav>
       <p class="note">
         Сессий: ${a.sessionsCount} · Серия: ${a.streakDays} · Уверенность ср.: ${a.avgConfidence} ·
         Спокойствие ср.: ${a.avgCalm}

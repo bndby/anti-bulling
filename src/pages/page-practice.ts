@@ -1,6 +1,5 @@
 import { LitElement, html } from 'lit';
 import { customElement } from 'lit/decorators.js';
-import '@/components/app-nav';
 import { pageLayoutStyles } from '@/styles/page-layout';
 import { navigate, setTrainingLaunch } from '@/services/navigation';
 import { pickRandomScenario } from '@/services/scenario-loader';
@@ -23,7 +22,6 @@ export class PagePractice extends LitElement {
 
   protected render() {
     return html`
-      <app-nav title="Практика"></app-nav>
       <p class="page-sub">Случайная ситуация из 30 сценариев. Отвечай спокойно и коротко.</p>
       <mdw-button filled class="btn-block" @click=${() => this.start()}>Начать</mdw-button>
     `;

@@ -1,6 +1,5 @@
 import { LitElement, html } from 'lit';
 import { customElement, state } from 'lit/decorators.js';
-import '@/components/app-nav';
 import { pageLayoutStyles } from '@/styles/page-layout';
 import type { ConflictType, ScenarioIntensity } from '@/models/types';
 import { generateFreeScenario } from '@/ai/agents/scenario-agent';
@@ -52,7 +51,6 @@ export class PageChat extends LitElement {
 
   protected render() {
     return html`
-      <app-nav title="Свободный чат"></app-nav>
       <p class="page-sub">Опиши ситуацию — AI соберёт сцену для тренировки.</p>
 
       <div class="field">

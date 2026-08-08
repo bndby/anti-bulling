@@ -2,7 +2,6 @@ import { LitElement, css, html } from 'lit';
 import { customElement, state } from 'lit/decorators.js';
 import { animate } from 'motion';
 import { ConversationEngine } from '@/ai/conversation-engine';
-import '@/components/app-nav';
 import { pageLayoutStyles } from '@/styles/page-layout';
 import '@/components/chat-bubble';
 import '@/components/score-bars';
@@ -278,6 +277,7 @@ export class PageTraining extends LitElement {
 
   async connectedCallback(): Promise<void> {
     super.connectedCallback();
+    window.addEventListener('training-exit-request', this.onTrainingExitRequest);
     this.launch = getTrainingLaunch();
     const settings = await getSettings();
     this.voiceEnabled = settings.voiceEnabled && isSpeechSupported();
@@ -329,8 +329,13 @@ export class PageTraining extends LitElement {
 
   disconnectedCallback(): void {
     this.recognition?.abort();
+    window.removeEventListener('training-exit-request', this.onTrainingExitRequest);
     super.disconnectedCallback();
   }
+
+  private onTrainingExitRequest = () => {
+    if (!this.busy) void this.finish(false);
+  };
 
   private animateFeed() {
     requestAnimationFrame(() => {
@@ -535,7 +540,6 @@ export class PageTraining extends LitElement {
     const waitingLabel =
       this.launch?.mode === 'exam' ? 'Отвечает…' : 'Тренер и собеседник думают…';
     return html`
-      <app-nav back="/" title="Тренировка"></app-nav>
       <div class="scene">
         <div class="scene-visual">
           <img class="scene-image" src=${this.sceneImage} alt="" />
@@ -668,27 +672,6 @@ export class PageTraining extends LitElement {
             </div>
           `}
 
-      <div class="actions">
-        ${this.sceneEnded
-          ? null
-          : html`
-              <mdw-button
-                outlined
-                class="btn-block"
-                ?disabled=${this.busy}
-                @click=${() => this.finish(true)}
-              >
-                Завершить сцену
-              </mdw-button>
-            `}
-        <mdw-button
-          class="btn-block"
-          ?disabled=${this.busy}
-          @click=${() => this.finish(this.sceneEnded)}
-        >
-          Выйти
-        </mdw-button>
-      </div>
     `;
   }
 }

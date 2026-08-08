@@ -1,6 +1,5 @@
 import { LitElement, css, html } from 'lit';
 import { customElement, state } from 'lit/decorators.js';
-import '@/components/app-nav';
 import type { JourneyNode } from '@/models/types';
 import { pageLayoutStyles } from '@/styles/page-layout';
 import { navigate, setTrainingLaunch } from '@/services/navigation';
@@ -74,7 +73,6 @@ export class PageStory extends LitElement {
 
   protected render() {
     return html`
-      <app-nav title="История"></app-nav>
       <p class="page-sub">Путешествие по школе. Каждый уровень сложнее.</p>
       <div class="path">
         ${this.nodes.map((n) => {

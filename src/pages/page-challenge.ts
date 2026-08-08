@@ -1,6 +1,5 @@
 import { LitElement, html } from 'lit';
 import { customElement } from 'lit/decorators.js';
-import '@/components/app-nav';
 import { pageLayoutStyles } from '@/styles/page-layout';
 import { navigate, setTrainingLaunch } from '@/services/navigation';
 import { pickRandomScenario } from '@/services/scenario-loader';
@@ -23,7 +22,6 @@ export class PageChallenge extends LitElement {
 
   protected render() {
     return html`
-      <app-nav title="Испытание"></app-nav>
       <p class="page-sub">Сложные сценарии (интенсивность 4–5). Готовься к давлению.</p>
       <mdw-button filled class="btn-block" @click=${() => this.start()}>В бой</mdw-button>
     `;
