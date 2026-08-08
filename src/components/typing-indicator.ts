@@ -37,8 +37,8 @@ export class TypingIndicator extends LitElement {
       gap: 0.55rem;
       padding: 0.75rem 1rem;
       border-radius: var(--radius-md);
-      background: #3a2430;
-      border: 1px solid rgba(232, 93, 93, 0.25);
+      background: rgb(var(--mdw-color__surface-container-high));
+      border: 1px solid rgb(var(--mdw-color__outline-variant));
     }
     .dots {
       display: inline-flex;

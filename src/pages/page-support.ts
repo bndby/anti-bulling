@@ -1,13 +1,15 @@
 import { LitElement, css, html } from 'lit';
 import { customElement } from 'lit/decorators.js';
+import '@/components/app-nav';
+import { pageLayoutStyles } from '@/styles/page-layout';
 import { navigate } from '@/services/navigation';
 
 @customElement('page-support')
 export class PageSupport extends LitElement {
-  static styles = css`
+  static styles = [pageLayoutStyles, css`
     .box {
-      background: #2a2030;
-      border: 1px solid rgba(232, 93, 93, 0.35);
+      background: rgb(var(--mdw-color__error-container));
+      border: 1px solid rgb(var(--mdw-color__error));
       border-radius: var(--radius-lg);
       padding: 1.25rem;
       margin: 1.5rem 0;
@@ -18,23 +20,23 @@ export class PageSupport extends LitElement {
     }
     .box p,
     .box li {
-      color: var(--color-text-muted);
+      color: rgb(var(--mdw-color__on-error-container));
       line-height: 1.45;
     }
     a {
-      color: var(--color-accent);
+      color: rgb(var(--mdw-color__on-error-container));
       font-weight: 700;
     }
-  `;
+  `];
 
   protected render() {
     return html`
-      <h1 class="page-title">Ты не один</h1>
+      <app-nav title="Ты не один"></app-nav>
       <div class="box">
         <h2>Тренировка остановлена</h2>
         <p>
-          Похоже, речь о чём-то серьёзном в реальной жизни. Симуляция сейчас не поможет —
-          важно поговорить с доверенным взрослым.
+          Похоже, речь о чём-то серьёзном в реальной жизни. Симуляция сейчас не поможет — важно
+          поговорить с доверенным взрослым.
         </p>
         <p><strong>Обратись к:</strong></p>
         <ul>
@@ -53,7 +55,7 @@ export class PageSupport extends LitElement {
           (бесплатно, круглосуточно).
         </p>
       </div>
-      <button class="btn btn-primary btn-block" @click=${() => navigate('/')}>На главную</button>
+      <mdw-button filled class="btn-block" @click=${() => navigate('/')}>На главную</mdw-button>
     `;
   }
 }

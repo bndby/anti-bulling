@@ -16,6 +16,7 @@ import '@/pages/page-training';
 import '@/pages/page-progress';
 import '@/pages/page-parent';
 import '@/pages/page-support';
+import '@/components/bottom-nav';
 import '@/components/offline-banner';
 
 function route(path: string): string {
@@ -46,11 +47,18 @@ export class AppRoot extends LitElement {
       display: block;
       min-height: 100dvh;
     }
+    .app-shell {
+      width: min(100%, 480px);
+      min-height: 100dvh;
+      margin: 0 auto;
+      padding: 1rem 1rem calc(6rem + env(safe-area-inset-bottom, 0px));
+    }
   `;
 
   async connectedCallback(): Promise<void> {
     super.connectedCallback();
     window.addEventListener('app-navigate', this.onAppNavigate);
+    window.addEventListener('popstate', this.onPopState);
 
     // GitHub Pages may open `/anti-bulling` without trailing slash
     const base = withBase('/').replace(/\/$/, '');
@@ -68,21 +76,30 @@ export class AppRoot extends LitElement {
 
   disconnectedCallback(): void {
     window.removeEventListener('app-navigate', this.onAppNavigate);
+    window.removeEventListener('popstate', this.onPopState);
     super.disconnectedCallback();
   }
 
   private onAppNavigate = (e: Event) => {
     const path = (e as CustomEvent<{ path: string }>).detail?.path;
-    if (path) void this.router.goto(withBase(path));
+    if (path) {
+      void this.router.goto(withBase(path));
+      this.requestUpdate();
+    }
   };
+
+  private onPopState = () => this.requestUpdate();
 
   protected render() {
     if (!this.ready) {
       return html`<div class="app-shell"><p class="page-sub">Загрузка…</p></div>`;
     }
+    const path = currentAppPath();
+    const showBottomNav = !['/onboarding', '/training', '/support'].includes(path);
     return html`
       <offline-banner></offline-banner>
       <div class="app-shell">${this.router.outlet()}</div>
+      ${showBottomNav ? html`<bottom-nav></bottom-nav>` : null}
     `;
   }
 }

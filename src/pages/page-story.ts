@@ -2,6 +2,7 @@ import { LitElement, css, html } from 'lit';
 import { customElement, state } from 'lit/decorators.js';
 import '@/components/app-nav';
 import type { JourneyNode } from '@/models/types';
+import { pageLayoutStyles } from '@/styles/page-layout';
 import { navigate, setTrainingLaunch } from '@/services/navigation';
 import { getJourney, getScenariosForNode } from '@/services/scenario-loader';
 import { getProgress, getScenarioState, getSettings, saveScenarioState } from '@/storage/db';
@@ -12,26 +13,28 @@ export class PageStory extends LitElement {
   @state() private unlocked = new Set<string>();
   @state() private current = 'first-day';
 
-  static styles = css`
+  static styles = [pageLayoutStyles, css`
     .path {
       display: grid;
       gap: 0.65rem;
     }
     .node {
       text-align: left;
-      padding: 1rem;
-      border-radius: var(--radius-md);
-      border: 1px solid var(--color-border);
-      background: var(--color-surface);
+      --mdw-shape__size: var(--radius-md);
+      min-height: 78px;
+      height: auto;
+      width: 100%;
+      justify-content: flex-start;
+      padding-block: 0.85rem;
       color: var(--color-text);
-      cursor: pointer;
     }
-    .node:disabled {
+    .node:disabled,
+    .node[disabled] {
       opacity: 0.4;
       cursor: not-allowed;
     }
     .node.current {
-      border-color: var(--color-primary);
+      color: var(--color-primary);
     }
     .node h3 {
       margin: 0 0 0.25rem;
@@ -42,7 +45,7 @@ export class PageStory extends LitElement {
       color: var(--color-text-muted);
       font-size: 0.9rem;
     }
-  `;
+  `];
 
   async connectedCallback(): Promise<void> {
     super.connectedCallback();
@@ -71,21 +74,23 @@ export class PageStory extends LitElement {
 
   protected render() {
     return html`
-      <app-nav></app-nav>
-      <h1 class="page-title">История</h1>
+      <app-nav title="История"></app-nav>
       <p class="page-sub">Путешествие по школе. Каждый уровень сложнее.</p>
       <div class="path">
         ${this.nodes.map((n) => {
           const open = this.unlocked.has(n.id) || n.id === 'first-day';
           return html`
-            <button
+            <mdw-button
+              outlined
               class="node ${n.id === this.current ? 'current' : ''}"
               ?disabled=${!open}
               @click=${() => this.play(n)}
             >
-              <h3>${n.title}</h3>
-              <p>${open ? `${n.scenarioIds.length} сцен` : 'Закрыто'}</p>
-            </button>
+              <span>
+                <h3>${n.title}</h3>
+                <p>${open ? `${n.scenarioIds.length} сцен` : 'Закрыто'}</p>
+              </span>
+            </mdw-button>
           `;
         })}
       </div>

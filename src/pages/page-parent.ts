@@ -1,6 +1,7 @@
 import { LitElement, css, html } from 'lit';
 import { customElement, state } from 'lit/decorators.js';
 import '@/components/app-nav';
+import { pageLayoutStyles } from '@/styles/page-layout';
 import type { ParentAnalytics } from '@/services/parent-analytics';
 import { buildParentAnalytics } from '@/services/parent-analytics';
 import { verifyPin } from '@/services/crypto';
@@ -14,7 +15,7 @@ export class PageParent extends LitElement {
   @state() private analytics?: ParentAnalytics;
   @state() private needsSetup = false;
 
-  static styles = css`
+  static styles = [pageLayoutStyles, css`
     .card {
       background: var(--color-surface);
       border: 1px solid var(--color-border);
@@ -38,7 +39,7 @@ export class PageParent extends LitElement {
       color: var(--color-text-muted);
       margin-bottom: 1rem;
     }
-  `;
+  `];
 
   async connectedCallback(): Promise<void> {
     super.connectedCallback();
@@ -69,32 +70,36 @@ export class PageParent extends LitElement {
   protected render() {
     if (!this.unlocked) {
       return html`
-        <app-nav></app-nav>
-        <h1 class="page-title">Родителям</h1>
+        <app-nav title="Родителям"></app-nav>
         <p class="note">Без просмотра переписки. Только аналитика. PIN задаётся в настройках.</p>
         ${this.needsSetup
           ? html`<p class="note">PIN ещё не задан — откройте Настройки.</p>`
           : null}
         <div class="field">
-          <label>PIN</label>
-          <input
+          <mdw-input
+            outlined
+            label="PIN"
             type="password"
             inputmode="numeric"
             maxlength="4"
             .value=${this.pin}
             @input=${(e: Event) => (this.pin = (e.target as HTMLInputElement).value)}
-          />
+          ></mdw-input>
         </div>
-        ${this.error ? html`<p style="color:var(--color-danger);font-weight:700">${this.error}</p>` : null}
-        <button class="btn btn-primary btn-block" @click=${() => this.tryUnlock()}>Войти</button>
+        ${this.error
+          ? html`<p style="color:var(--color-danger);font-weight:700">${this.error}</p>`
+          : null}
+        <mdw-button filled class="btn-block" @click=${() => this.tryUnlock()}>Войти</mdw-button>
       `;
     }
 
     const a = this.analytics!;
     return html`
-      <app-nav></app-nav>
-      <h1 class="page-title">Аналитика</h1>
-      <p class="note">Сессий: ${a.sessionsCount} · Серия: ${a.streakDays} · Уверенность ср.: ${a.avgConfidence} · Спокойствие ср.: ${a.avgCalm}</p>
+      <app-nav title="Аналитика"></app-nav>
+      <p class="note">
+        Сессий: ${a.sessionsCount} · Серия: ${a.streakDays} · Уверенность ср.: ${a.avgConfidence} ·
+        Спокойствие ср.: ${a.avgCalm}
+      </p>
 
       ${this.block('Сильные стороны', a.strengths)}
       ${this.block('Слабые стороны', a.weaknesses)}

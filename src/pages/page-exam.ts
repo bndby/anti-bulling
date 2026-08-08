@@ -1,12 +1,15 @@
 import { LitElement, html } from 'lit';
 import { customElement } from 'lit/decorators.js';
 import '@/components/app-nav';
+import { pageLayoutStyles } from '@/styles/page-layout';
 import { navigate, setTrainingLaunch } from '@/services/navigation';
 import { pickExamScenarios } from '@/services/scenario-loader';
 import { getSettings } from '@/storage/db';
 
 @customElement('page-exam')
 export class PageExam extends LitElement {
+  static styles = pageLayoutStyles;
+
   private async start() {
     const settings = await getSettings();
     if (!settings.openRouterApiKey.trim()) {
@@ -25,10 +28,11 @@ export class PageExam extends LitElement {
 
   protected render() {
     return html`
-      <app-nav></app-nav>
-      <h1 class="page-title">Экзамен</h1>
+      <app-nav title="Экзамен"></app-nav>
       <p class="page-sub">10 ситуаций подряд. Без подсказок тренера. Держи границы.</p>
-      <button class="btn btn-primary btn-block" @click=${() => this.start()}>Начать экзамен</button>
+      <mdw-button filled class="btn-block" @click=${() => this.start()}>
+        Начать экзамен
+      </mdw-button>
     `;
   }
 }

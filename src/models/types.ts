@@ -96,16 +96,26 @@ export interface AppSettings {
   openRouterApiKey: string;
   model: string;
   voiceEnabled: boolean;
-  theme: 'dark';
+  theme: 'light';
 }
 
 export interface Profile {
   id: string;
   name: string;
   ageBand: AgeBand;
+  avatarId: AvatarId;
   createdAt: string;
   parentPinHash: string | null;
 }
+
+export type AvatarId =
+  | 'boy-blond'
+  | 'boy-light-brown'
+  | 'boy-dark'
+  | 'girl-blond'
+  | 'girl-light-brown'
+  | 'girl-dark'
+  | 'girl-red';
 
 export interface ProgressState {
   streakDays: number;
@@ -211,5 +221,5 @@ export const DEFAULT_SETTINGS: AppSettings = {
   openRouterApiKey: '',
   model: DEFAULT_MODEL,
   voiceEnabled: true,
-  theme: 'dark',
+  theme: 'light',
 };
