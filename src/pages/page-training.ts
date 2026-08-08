@@ -199,7 +199,6 @@ export class PageTraining extends LitElement {
       font-size: 0.85rem;
     }
     .feed {
-      min-height: 40vh;
       margin-bottom: 1rem;
     }
     .composer {
