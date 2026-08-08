@@ -22,7 +22,7 @@ export class AppNav extends LitElement {
       top: max(0px, env(safe-area-inset-top, 0px));
       right: 0;
       left: 0;
-      display: block;
+      display: grid;
       box-sizing: border-box;
       width: min(100%, 480px);
       height: 68px;
