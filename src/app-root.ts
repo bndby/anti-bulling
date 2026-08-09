@@ -61,6 +61,12 @@ export class AppRoot extends LitElement {
     :host {
       display: block;
       min-height: 100dvh;
+      box-sizing: border-box;
+    }
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
     }
     .app-shell {
       width: min(100%, 480px);

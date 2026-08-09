@@ -39,6 +39,13 @@ export class BottomNav extends LitElement {
       width: min(100%, 480px);
       transform: translateX(-50%);
       font-family: var(--font-body);
+      box-sizing: border-box;
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
     }
 
     mdw-bottom-app-bar {

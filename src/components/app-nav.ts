@@ -15,6 +15,13 @@ export class AppNav extends LitElement {
       display: block;
       height: 0;
       margin: 0;
+      box-sizing: border-box;
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
     }
     mdw-top-app-bar {
       position: fixed;

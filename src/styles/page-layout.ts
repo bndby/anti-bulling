@@ -3,6 +3,13 @@ import { css } from 'lit';
 export const pageLayoutStyles = css`
   :host {
     display: block;
+    box-sizing: border-box;
+  }
+
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
   }
 
   .page-title {
