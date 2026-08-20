@@ -38,15 +38,13 @@ export function addTrainingMinutes(progress: ProgressState, minutes: number): Pr
 
 export function applyTurnToProgress(
   progress: ProgressState,
-  scores: ScoreScales,
   deltas: {
     rpg: Partial<RpgStats>;
     confidenceDelta: number;
     calmDelta: number;
   },
 ): ProgressState {
-  let next = updateStreak(progress);
-  next = { ...next, rpg: { ...next.rpg } };
+  const next = { ...progress, rpg: { ...progress.rpg } };
 
   for (const key of Object.keys(deltas.rpg) as (keyof RpgStats)[]) {
     const d = deltas.rpg[key] ?? 0;
@@ -54,12 +52,6 @@ export function applyTurnToProgress(
   }
   next.confidenceDelta += deltas.confidenceDelta;
   next.calmDelta += deltas.calmDelta;
-
-  if (scores.emotionalControl >= 70 && scores.aggression < 30) {
-    next.calmAnswersStreak += 1;
-  } else {
-    next.calmAnswersStreak = 0;
-  }
 
   next.level = 1 + Math.floor(next.totalSessions / 5) + Math.floor(
     (next.rpg.composure + next.rpg.courage + next.rpg.emotionControl) / 50,

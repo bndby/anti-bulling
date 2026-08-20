@@ -23,6 +23,9 @@ export class PageHome extends LitElement {
       gap: 0.65rem;
       margin-bottom: 1.25rem;
     }
+    .stat-grid.single {
+      grid-template-columns: 1fr;
+    }
     .stat {
       background: var(--color-surface);
       border: 1px solid var(--color-border);
@@ -98,15 +101,14 @@ export class PageHome extends LitElement {
 
       <div class="hero">
         <p class="page-sub">Сегодня</p>
-        <div class="stat-grid">
+        <div class="stat-grid single">
           <div class="stat">
             <strong>${p?.minutesToday ?? 0} мин</strong>
-            <span>тренировки</span>
+            <span>сегодня</span>
           </div>
-          <div class="stat">
-            <strong>${p?.streakDays ?? 0}</strong>
-            <span>серия дней</span>
-          </div>
+        </div>
+        <p class="page-sub">Прирост</p>
+        <div class="stat-grid">
           <div class="stat">
             <strong>+${p?.confidenceDelta ?? 0}</strong>
             <span>уверенность</span>

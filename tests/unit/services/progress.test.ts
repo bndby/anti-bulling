@@ -65,9 +65,9 @@ describe('progress', () => {
     expect(broken.streakDays).toBe(1);
   });
 
-  it('clamps rpg deltas and accumulates confidence/calm', () => {
-    let p = progress({ confidenceDelta: 1, calmDelta: 2 });
-    p = applyTurnToProgress(p, baseScores, {
+  it('clamps rpg deltas and accumulates confidence/calm without awarding streak', () => {
+    let p = progress({ confidenceDelta: 1, calmDelta: 2, streakDays: 7, calmAnswersStreak: 2 });
+    p = applyTurnToProgress(p, {
       rpg: { composure: 200, courage: -50 },
       confidenceDelta: 2,
       calmDelta: 1,
@@ -76,31 +76,19 @@ describe('progress', () => {
     expect(p.rpg.courage).toBe(0);
     expect(p.confidenceDelta).toBe(3);
     expect(p.calmDelta).toBe(3);
-  });
+    expect(p.streakDays).toBe(7);
+    expect(p.calmAnswersStreak).toBe(2);
+    expect(p.lastTrainDate).toBeNull();
 
-  it('increments calm streak only when both calm conditions hold', () => {
-    const calm = applyTurnToProgress(
-      progress({ calmAnswersStreak: 2 }),
-      scores({ emotionalControl: 70, aggression: 29 }),
+    const yesterday = new Date();
+    yesterday.setUTCDate(yesterday.getUTCDate() - 1);
+    const yKey = todayKey(yesterday);
+    const consecutive = applyTurnToProgress(
+      progress({ streakDays: 4, lastTrainDate: yKey }),
       { rpg: {}, confidenceDelta: 0, calmDelta: 0 },
     );
-    expect(calm.calmAnswersStreak).toBe(3);
-
-    expect(
-      applyTurnToProgress(progress({ calmAnswersStreak: 2 }), scores({ emotionalControl: 69, aggression: 0 }), {
-        rpg: {},
-        confidenceDelta: 0,
-        calmDelta: 0,
-      }).calmAnswersStreak,
-    ).toBe(0);
-
-    expect(
-      applyTurnToProgress(progress({ calmAnswersStreak: 2 }), scores({ emotionalControl: 70, aggression: 30 }), {
-        rpg: {},
-        confidenceDelta: 0,
-        calmDelta: 0,
-      }).calmAnswersStreak,
-    ).toBe(0);
+    expect(consecutive.streakDays).toBe(4);
+    expect(consecutive.lastTrainDate).toBe(yKey);
   });
 
   it('computes level from sessions and rpg totals', () => {
@@ -114,7 +102,6 @@ describe('progress', () => {
           emotionControl: 0,
         },
       }),
-      baseScores,
       { rpg: {}, confidenceDelta: 0, calmDelta: 0 },
     );
     expect(p.level).toBe(3);
@@ -129,7 +116,6 @@ describe('progress', () => {
           emotionControl: 0,
         },
       }),
-      baseScores,
       { rpg: {}, confidenceDelta: 0, calmDelta: 0 },
     );
     expect(mixed.level).toBe(2);
