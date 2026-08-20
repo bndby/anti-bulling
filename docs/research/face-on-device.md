@@ -19,9 +19,14 @@
    которых это предполагается.
 
 `getUserMedia()` сам по себе создаёт поток для страницы; он не является API
-отправки видео. Но ни этот API, ни MediaPipe не могут технически запретить
-остальному коду страницы отправить кадр: это свойство архитектуры приложения и
-его сетевой политики, а не гарантия распознавателя.
+отправки видео. Официальное privacy notice MediaPipe Tasks заявляет, что
+обработка входных изображений и видео происходит на устройстве и этот вход не
+посылается серверам Google. Однако тот же документ говорит, что Tasks отправляет
+Google метрики производительности и использования API. Поэтому «без отправки
+видео» подтверждается для входных кадров, но «всё без какой-либо сети» не
+следует заявлять без учёта телеметрии, загрузки WASM/модели и сетевого кода
+самого приложения. [MediaPipe Tasks Vision: Privacy
+Notice](https://raw.githubusercontent.com/google-ai-edge/mediapipe/master/mediapipe/tasks/web/vision/README.md)
 
 ## Первичные браузерные механизмы
 
@@ -73,11 +78,12 @@
   условий распространения, включая передачу текста лицензии. [Официальный
   LICENSE MediaPipe](https://github.com/google-ai-edge/mediapipe/blob/master/LICENSE)
 - Лицензия репозитория сама по себе не доказывает лицензию любого отдельно
-  скачиваемого веса модели. В официальной странице Face Landmarker указаны
-  model cards компонентов, но в этом исследовании не найдено отдельного
-  лицензионного текста для конкретного файла `face_landmarker.task`; его
-  лицензию следует проверить перед распространением модели вместе с продуктом.
-  [Google AI Edge: таблица model cards](https://ai.google.dev/edge/mediapipe/solutions/vision/face_landmarker#models)
+  скачиваемого веса модели. Для компонентов FaceMesh V2 и Blendshape V2
+  официальные model cards явно указывают Apache License 2.0. Это не заменяет
+  проверку лицензии всего скачиваемого bundle `face_landmarker.task`, включая
+  остальные его компоненты, перед распространением модели вместе с продуктом.
+  [Model Card: FaceMesh V2](https://storage.googleapis.com/mediapipe-assets/Model%20Card%20MediaPipe%20Face%20Mesh%20V2.pdf);
+  [Model Card: Blendshape V2](https://storage.googleapis.com/mediapipe-assets/Model%20Card%20Blendshape%20V2.pdf)
 
 ## Нет камеры, отказ или недоступность
 
@@ -94,13 +100,24 @@
 enumerateDevices](https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/enumerateDevices);
 [MDN: MediaDeviceInfo.label](https://developer.mozilla.org/en-US/docs/Web/API/MediaDeviceInfo/label)
 
+## Границы интерпретации
+
+Официальные model cards описывают FaceMesh V2 и Blendshape V2 как модели для
+AR-развлечений, не для жизненно важных решений, распознавания или идентификации
+человека. Они также предупреждают об ухудшении качества при плохом освещении,
+шуме, движении, перекрытии лица, большом повороте головы либо частичной
+видимости. Поэтому коэффициенты blendshape нельзя считать подтверждёнными
+эмоциями, правдивостью, самообладанием или качеством хода.
+[Model Card: FaceMesh V2](https://storage.googleapis.com/mediapipe-assets/Model%20Card%20MediaPipe%20Face%20Mesh%20V2.pdf);
+[Model Card: Blendshape V2](https://storage.googleapis.com/mediapipe-assets/Model%20Card%20Blendshape%20V2.pdf)
+
 ## Выводы без выбора реализации
 
 1. Браузер предоставляет стандартизованный, permission-gated доступ к
    видеопотоку; MediaPipe предоставляет документированный Web-путь к landmarks
    и blendshape на поступающих кадрах.
-2. Локальность достигается не названием API, а отсутствием кода, который
-   сериализует и отправляет видео/производные за пределы устройства, и
-   локальной поставкой WASM/модели либо контролируемой загрузкой этих ассетов.
+2. Входные кадры MediaPipe Tasks обрабатывает на устройстве и не отправляет
+   Google, но для строгой локальности нужно также учитывать телеметрию Tasks,
+   загрузку WASM/модели и сетевой код приложения.
 3. Камера и модель не являются необходимыми условиями сцены; результат
    распознавания лица не должен становиться четвёртой шкалой измерения.
