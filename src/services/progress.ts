@@ -52,10 +52,7 @@ export function applyTurnToProgress(
   }
   next.confidenceDelta += deltas.confidenceDelta;
   next.calmDelta += deltas.calmDelta;
-
-  next.level = 1 + Math.floor(next.totalSessions / 5) + Math.floor(
-    (next.rpg.composure + next.rpg.courage + next.rpg.emotionControl) / 50,
-  );
+  next.level = progressNumber(next);
 
   return next;
 }
@@ -101,8 +98,19 @@ export function achievementTitle(id: string): string {
 }
 
 export function markSessionComplete(progress: ProgressState): ProgressState {
-  return {
+  const next = {
     ...progress,
+    rpg: { ...progress.rpg },
     totalSessions: progress.totalSessions + 1,
   };
+  next.level = progressNumber(next);
+  return next;
+}
+
+function progressNumber(progress: ProgressState): number {
+  return (
+    1 +
+    Math.floor(progress.totalSessions / 5) +
+    Math.floor((progress.rpg.composure + progress.rpg.courage + progress.rpg.emotionControl) / 50)
+  );
 }

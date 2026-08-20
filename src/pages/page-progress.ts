@@ -3,7 +3,6 @@ import { customElement, state } from 'lit/decorators.js';
 import { animate } from 'motion';
 import { pageLayoutStyles } from '@/styles/page-layout';
 import type { ProgressState } from '@/models/types';
-import achievements from '@/content/achievements.json';
 import { navigate } from '@/services/navigation';
 import { ensureDailyFields } from '@/services/progress';
 import { getProgress } from '@/storage/db';
@@ -40,28 +39,6 @@ export class PageProgress extends LitElement {
         rgb(var(--mdw-color__primary))
       );
     }
-    .achs {
-      display: grid;
-      gap: 0.5rem;
-    }
-    .ach {
-      padding: 0.85rem 1rem;
-      border-radius: var(--radius-md);
-      background: rgb(var(--mdw-color__surface-container));
-      border: 1px solid rgb(var(--mdw-color__outline-variant));
-    }
-    .ach.locked {
-      opacity: 0.45;
-    }
-    .ach h3 {
-      margin: 0 0 0.2rem;
-      font-size: 1rem;
-    }
-    .ach p {
-      margin: 0;
-      color: var(--color-text-muted);
-      font-size: 0.85rem;
-    }
   `];
 
   async connectedCallback(): Promise<void> {
@@ -85,10 +62,9 @@ export class PageProgress extends LitElement {
       ['persistence', 'Настойчивость'],
       ['emotionControl', 'Контроль эмоций'],
     ];
-    const unlocked = new Set(p.achievements);
 
     return html`
-      <p class="page-sub">Уровень ${p.level} · Серия ${p.streakDays} дн. · Сессий ${p.totalSessions}</p>
+      <p class="page-sub">Прогресс ${p.level}</p>
 
       <div class="rpg">
         ${rpgLabels.map(
@@ -97,18 +73,6 @@ export class PageProgress extends LitElement {
               <span>${label}</span>
               <span>${p.rpg[key]}</span>
               <div class="track"><div class="fill" style="width:${p.rpg[key]}%"></div></div>
-            </div>
-          `,
-        )}
-      </div>
-
-      <h2 class="page-title" style="font-size:1.25rem">Достижения</h2>
-      <div class="achs">
-        ${(achievements as Array<{ id: string; title: string; description: string }>).map(
-          (a) => html`
-            <div class="ach ${unlocked.has(a.id) ? '' : 'locked'}">
-              <h3>${a.title}</h3>
-              <p>${a.description}</p>
             </div>
           `,
         )}

@@ -18,7 +18,7 @@ import {
   type DialogueEndDecision,
   type DialogueOutcome,
 } from '@/services/dialogue-end';
-import { applyTurnToProgress, checkAchievements } from '@/services/progress';
+import { applyTurnToProgress } from '@/services/progress';
 import { buildNarratorIntro } from '@/services/scene-brief';
 
 export interface TurnResult {
@@ -131,7 +131,6 @@ export class ConversationEngine {
       this.scenario.openingLine;
 
     let coach: CoachFeedback | null = null;
-    let unlocked: string[] = [];
 
     if (!this.examNoCoach) {
       coach = await runCoachAgent({
@@ -149,10 +148,7 @@ export class ConversationEngine {
       });
 
       const deltas = await analyzeProgressDeltas(coach.scores);
-      this.progress = applyTurnToProgress(this.progress, coach.scores, deltas);
-      const checked = checkAchievements(this.progress, coach.scores, trimmed);
-      this.progress = checked.progress;
-      unlocked = checked.unlocked;
+      this.progress = applyTurnToProgress(this.progress, deltas);
     }
 
     const endDecision = evaluateDialogueEnd({
@@ -162,7 +158,7 @@ export class ConversationEngine {
     });
 
     if (endDecision.ended) {
-      return this.finishWithOutcome(endDecision, coach, unlocked);
+      return this.finishWithOutcome(endDecision, coach);
     }
 
     const bullyReply = await runBullyAgent({
@@ -188,7 +184,7 @@ export class ConversationEngine {
       coach: coach ?? undefined,
       messages: [...this.messages],
       progress: this.progress,
-      newAchievements: unlocked,
+      newAchievements: [],
       ended: false,
     };
   }
@@ -196,7 +192,6 @@ export class ConversationEngine {
   private finishWithOutcome(
     decision: DialogueEndDecision,
     coach: CoachFeedback | null,
-    unlocked: string[],
   ): TurnResult {
     this.ended = true;
     this.outcome = decision.outcome;
@@ -230,7 +225,7 @@ export class ConversationEngine {
       coach: coach ?? undefined,
       messages: [...this.messages],
       progress: this.progress,
-      newAchievements: unlocked,
+      newAchievements: [],
       ended: true,
       outcome: decision.outcome,
       endDecision: decision,

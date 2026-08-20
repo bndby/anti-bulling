@@ -73,7 +73,7 @@ export class PageStory extends LitElement {
 
   protected render() {
     return html`
-      <p class="page-sub">Путешествие по школе. Каждый уровень сложнее.</p>
+      <p class="page-sub">Путешествие по школе. Следующий этап сложнее.</p>
       <div class="path">
         ${this.nodes.map((n) => {
           const open = this.unlocked.has(n.id) || n.id === 'first-day';

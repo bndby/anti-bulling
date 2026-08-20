@@ -18,7 +18,7 @@ const PRIMARY_ITEMS: NavigationItem[] = [
 
 const MORE_ITEMS: NavigationItem[] = [
   { path: '/story', label: 'История', icon: 'menu_book' },
-  { path: '/chat', label: 'Свободный чат', icon: 'chat' },
+  { path: '/chat', label: 'Свободная сцена', icon: 'chat' },
   { path: '/challenge', label: 'Испытание', icon: 'bolt' },
   { path: '/exam', label: 'Экзамен', icon: 'assignment' },
   { path: '/parent', label: 'Родителям', icon: 'family_restroom' },

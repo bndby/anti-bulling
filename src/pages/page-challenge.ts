@@ -22,7 +22,7 @@ export class PageChallenge extends LitElement {
 
   protected render() {
     return html`
-      <p class="page-sub">Сложные сценарии (интенсивность 4–5). Готовься к давлению.</p>
+      <p class="page-sub">Сложные сценарии (уровень 4–5). Готовься к давлению.</p>
       <mdw-button filled class="btn-block" @click=${() => this.start()}>В бой</mdw-button>
     `;
   }

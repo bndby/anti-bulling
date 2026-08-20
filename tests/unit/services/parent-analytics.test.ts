@@ -103,16 +103,15 @@ describe('parent analytics', () => {
     expect(a.weaknesses).toEqual(['Пока недостаточно данных']);
   });
 
-  it('builds improvements from deltas and streak', () => {
+  it('builds improvements from прирост only', () => {
     const withGains = buildParentAnalytics(
       progress({ confidenceDelta: 3, calmDelta: 2, streakDays: 2 }),
       [],
     );
-    expect(withGains.improvements).toEqual(['Уверенность +3', 'Спокойствие +2', 'Серия 2 дн.']);
-    expect(withGains.streakDays).toBe(2);
+    expect(withGains.improvements).toEqual(['Уверенность +3', 'Спокойствие +2']);
 
     const fallback = buildParentAnalytics(
-      progress({ confidenceDelta: 0, calmDelta: 0, streakDays: 1 }),
+      progress({ confidenceDelta: 0, calmDelta: 0, streakDays: 9 }),
       [],
     );
     expect(fallback.improvements).toEqual(['Продолжайте короткие тренировки']);

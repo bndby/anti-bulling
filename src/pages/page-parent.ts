@@ -58,16 +58,16 @@ export class PageParent extends LitElement {
       return;
     }
     this.error = '';
-    this.unlocked = true;
     const progress = await getProgress();
     const sessions = await listSessions();
     // Strip messages for parent view safety
     const safeSessions = sessions.map(({ messages: _m, ...rest }) => rest);
     this.analytics = buildParentAnalytics(progress, safeSessions);
+    this.unlocked = true;
   }
 
   protected render() {
-    if (!this.unlocked) {
+    if (!this.unlocked || !this.analytics) {
       return html`
         <p class="note">Без просмотра переписки. Только аналитика. PIN задаётся в настройках.</p>
         ${this.needsSetup
@@ -94,8 +94,7 @@ export class PageParent extends LitElement {
     const a = this.analytics!;
     return html`
       <p class="note">
-        Сессий: ${a.sessionsCount} · Серия: ${a.streakDays} · Уверенность ср.: ${a.avgConfidence} ·
-        Спокойствие ср.: ${a.avgCalm}
+        Уверенность ср.: ${a.avgConfidence} · Спокойствие ср.: ${a.avgCalm}
       </p>
 
       ${this.block('Сильные стороны', a.strengths)}

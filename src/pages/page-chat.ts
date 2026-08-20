@@ -79,7 +79,7 @@ export class PageChat extends LitElement {
       <div class="field">
         <mdw-input
           outlined
-          label="Интенсивность (1–5)"
+          label="Уровень (1–5)"
           type="number"
           min="1"
           max="5"

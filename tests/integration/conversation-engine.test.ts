@@ -152,6 +152,20 @@ describe('ConversationEngine', () => {
     await expect(engine.submitUserReply('Ок')).rejects.toThrow(/Пустой ответ собеседника/);
   });
 
+  it('does not unlock achievements even when scores would have', async () => {
+    runCoachAgent.mockResolvedValue(
+      mockCoachFeedback({
+        scores: scores({ aggression: 10, emotionalControl: 80, confidence: 80 }),
+      }),
+    );
+    const engine = new ConversationEngine(testScenario, testCharacter, 'practice', freshProgress());
+    await engine.start();
+    const result = await engine.submitUserReply('Мне всё равно');
+    expect(result.newAchievements).toEqual([]);
+    expect(result.progress.achievements).toEqual([]);
+    expect(result.progress.streakDays).toBe(0);
+  });
+
   it('skips coach in exam mode when examNoCoach', async () => {
     const engine = new ConversationEngine(
       testScenario,
@@ -165,6 +179,9 @@ describe('ConversationEngine', () => {
     expect(runCoachAgent).not.toHaveBeenCalled();
     expect(result.coach).toBeUndefined();
     expect(result.bullyReply).toBeTruthy();
+    expect(result.progress.rpg.composure).toBe(freshProgress().rpg.composure);
+    expect(result.progress.confidenceDelta).toBe(0);
+    expect(result.progress.calmDelta).toBe(0);
   });
 
   it('returns ended result without reprocessing and allows setProgress', async () => {

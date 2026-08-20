@@ -61,13 +61,14 @@ describe('bottom-nav', () => {
     expect(labels).toEqual(
       expect.arrayContaining([
         expect.stringContaining('История'),
-        expect.stringContaining('Свободный чат'),
+        expect.stringContaining('Свободная сцена'),
         expect.stringContaining('Испытание'),
         expect.stringContaining('Экзамен'),
         expect.stringContaining('Родителям'),
         expect.stringContaining('Настройки'),
       ]),
     );
+    expect(labels.join(' ')).not.toMatch(/чат/i);
     const settings = [...el.shadowRoot!.querySelectorAll('[role="menuitem"]')].find((b) =>
       b.textContent?.includes('Настройки'),
     ) as HTMLButtonElement;

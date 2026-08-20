@@ -1,8 +1,9 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { html, fixture } from '../helpers/fixture';
+import { resetDb, waitForShadowText } from '../helpers/indexeddb';
 import { DEFAULT_PROGRESS, DEFAULT_SETTINGS } from '@/models/types';
 import { todayKey } from '@/services/crypto';
-import { closeDb, saveProfile, saveProgress, saveSettings } from '@/storage/db';
+import { saveProfile, saveProgress, saveSettings } from '@/storage/db';
 
 vi.mock('motion', () => ({ animate: vi.fn() }));
 vi.mock('@/services/navigation', () => ({
@@ -12,24 +13,10 @@ vi.mock('@/services/navigation', () => ({
 import '@/pages/page-home';
 import type { PageHome } from '@/pages/page-home';
 
-async function resetDb(): Promise<void> {
-  await closeDb();
-  await new Promise<void>((resolve, reject) => {
-    const req = indexedDB.deleteDatabase('anti-bullying');
-    req.onsuccess = () => resolve();
-    req.onerror = () => reject(req.error);
-    req.onblocked = () => resolve();
-  });
-}
-
 async function loadHome(): Promise<PageHome> {
   const el = await fixture<PageHome>(html`<page-home></page-home>`);
-  for (let i = 0; i < 30; i++) {
-    await el.updateComplete;
-    if (el.shadowRoot?.textContent?.includes('Лера')) return el;
-    await new Promise((r) => setTimeout(r, 10));
-  }
-  throw new Error('Главная не загрузила прогресс');
+  await waitForShadowText(el, 'Лера', 'Главная');
+  return el;
 }
 
 describe('page-home', () => {

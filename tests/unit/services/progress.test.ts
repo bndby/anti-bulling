@@ -121,6 +121,12 @@ describe('progress', () => {
     expect(mixed.level).toBe(2);
   });
 
+  it('grows the progress number after a completed scene without a ход', () => {
+    const p = markSessionComplete(progress({ totalSessions: 4, level: 1 }));
+    expect(p.totalSessions).toBe(5);
+    expect(p.level).toBe(2);
+  });
+
   it('unlocks achievements at exact thresholds and skips duplicates', () => {
     const noRage = checkAchievements(
       progress(),

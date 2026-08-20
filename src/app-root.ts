@@ -29,7 +29,7 @@ const APP_BAR_TITLES: Record<string, string> = {
   '/settings': 'Настройки',
   '/practice': 'Практика',
   '/story': 'История',
-  '/chat': 'Свободный чат',
+  '/chat': 'Свободная сцена',
   '/exam': 'Экзамен',
   '/challenge': 'Испытание',
   '/training': 'Тренировка',

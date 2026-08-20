@@ -53,7 +53,6 @@ export function buildParentAnalytics(
   const improvements: string[] = [];
   if (progress.confidenceDelta > 0) improvements.push(`Уверенность +${progress.confidenceDelta}`);
   if (progress.calmDelta > 0) improvements.push(`Спокойствие +${progress.calmDelta}`);
-  if (progress.streakDays > 1) improvements.push(`Серия ${progress.streakDays} дн.`);
   if (!improvements.length) improvements.push('Продолжайте короткие тренировки');
 
   const toPractice: string[] = [];
